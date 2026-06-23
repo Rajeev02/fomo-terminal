@@ -1,0 +1,64 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+export type Token = {
+  address: string;
+  symbol: string;
+  price: number;
+  change24h: number;
+  logoURI?: string;
+};
+
+// Mock data to start with
+const mockTokens: Token[] = [
+  { address: "So11111111111111111111111111111111111111112", symbol: "SOL", price: 150.23, change24h: 5.2 },
+  { address: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", symbol: "USDC", price: 1.00, change24h: 0.01 },
+  { address: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263", symbol: "BONK", price: 0.000021, change24h: 15.4 },
+  { address: "WENWENvqqNya429ubCdR81ZmD69brwQaaBYY6p3LCpk", symbol: "WEN", price: 0.00015, change24h: -2.3 },
+  { address: "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN", symbol: "JUP", price: 1.25, change24h: 8.7 },
+  { address: "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm", symbol: "$WIF", price: 2.30, change24h: 22.1 },
+];
+
+export function Banner({ reverse = false }: { reverse?: boolean }) {
+  const [tokens, setTokens] = useState<Token[]>(mockTokens);
+
+  useEffect(() => {
+    fetch("/api/trending")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.data) {
+          setTokens(data.data);
+        }
+      })
+      .catch((err) => console.error("Error fetching trending tokens:", err));
+  }, []);
+
+  // Duplicate tokens to create a seamless infinite scroll effect
+  const displayTokens = [...tokens, ...tokens, ...tokens];
+
+  return (
+    <div className="w-full overflow-hidden bg-zinc-900 border-y border-zinc-800 py-3 relative flex items-center">
+      <div 
+        className={`flex w-max space-x-8 animate-[marquee_60s_linear_infinite] ${reverse ? '[animation-direction:reverse]' : ''} hover:[animation-play-state:paused]`}
+      >
+        {displayTokens.map((token, idx) => (
+          <Link 
+            key={`${token.address}-${idx}`}
+            href={`/trade?token=${token.address}`}
+            className="flex items-center space-x-3 shrink-0 px-4 py-1 rounded-full hover:bg-zinc-800 transition-colors cursor-pointer group"
+          >
+            {/* Placeholder logo if none */}
+            <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[var(--chad-green)] to-[var(--chad-purple)]" />
+            <span className="font-bold text-white group-hover:text-[var(--chad-green)] transition-colors">{token.symbol}</span>
+            <span className="text-zinc-400 font-mono">${token.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 })}</span>
+            <span className={`font-mono text-sm ${token.change24h >= 0 ? 'text-[var(--chad-green)]' : 'text-red-500'}`}>
+              {token.change24h > 0 ? '+' : ''}{token.change24h.toFixed(2)}%
+            </span>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
