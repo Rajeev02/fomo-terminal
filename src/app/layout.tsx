@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ChadWallet | Trade Like a Chad",
+  title: "FomoTerminal",
   description: "The fastest, most premium Solana wallet and trading terminal.",
 };
 

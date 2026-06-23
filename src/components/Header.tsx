@@ -19,7 +19,7 @@ export function Header() {
     <header className="w-full flex items-center justify-between px-6 py-4 bg-zinc-900 border-b border-zinc-800">
       <Link href="/" className="flex items-center gap-2">
         <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[var(--chad-green)] to-[var(--chad-purple)]" />
-        <span className="font-black text-xl tracking-tight text-white">ChadWallet</span>
+        <span className="font-black text-xl tracking-tight text-white">FomoTerminal</span>
       </Link>
       
       <div className="flex items-center gap-4">

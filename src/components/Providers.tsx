@@ -24,7 +24,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         appearance: {
           theme: "dark",
           accentColor: "#39FF14",
-          logo: "https://auth.privy.io/logos/privy-logo-dark.png", // Replace with ChadWallet logo
+          logo: "https://auth.privy.io/logos/privy-logo-dark.png", // Replace with FomoTerminal logo
         },
         // Setup Google and Apple Auth
         loginMethods: ["google", "apple"],
