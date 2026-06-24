@@ -160,34 +160,34 @@ export default function Home() {
               <FeatureCard
                 label="PORTFOLIO"
                 title="track your wealth in real-time"
-                placeholderColor="bg-blue-500/10"
+                imageUrl="/images/fomo/leaderboard.webp"
               />
               <FeatureCard
                 label="DEFI YIELD"
                 title="stake and earn while you sleep"
-                placeholderColor="bg-[var(--chad-green)]/10"
+                imageUrl="/images/fomo/social-static.webp"
               />
               <FeatureCard
                 label="MEMECOIN SNIPER"
                 title="never miss a 100x gem again"
-                placeholderColor="bg-[var(--chad-purple)]/10"
+                imageUrl="/images/fomo/alerts-static.webp"
               />
             </div>
             <div className="flex flex-col md:flex-row gap-6 items-stretch">
               <FeatureCard
                 label="EASY ONBOARDING"
                 title="create a wallet in an instant"
-                placeholderColor="bg-yellow-500/10"
+                imageUrl="/images/fomo/sign-in-static.webp"
               />
               <FeatureCard
                 label="ZERO GAS"
                 title="sponsored transactions built in"
-                placeholderColor="bg-red-500/10"
+                imageUrl="/images/fomo/assets-static.webp"
               />
               <FeatureCard
                 label="ONE CLICK"
                 title="fund easily with apple pay"
-                placeholderColor="bg-cyan-500/10"
+                imageUrl="/images/fomo/apple-pay-static.webp"
               />
             </div>
           </div>
