@@ -195,6 +195,11 @@ export default function Home() {
 
         {/* Closing Social Proof Section */}
         <div className="relative self-stretch flex items-center justify-center py-40 md:py-60 mt-20 overflow-hidden">
+          <img
+            src="/images/fomo/legends.webp"
+            alt=""
+            className="absolute inset-0 w-full h-full bottom-0 object-cover opacity-50"
+          />
           <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-bg-primary to-transparent z-10" />
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-bg-primary to-transparent z-10" />
 
@@ -276,8 +281,16 @@ export default function Home() {
               </div>
 
               {/* Spinning background rings */}
-              <div className="absolute inset-0 m-auto z-1 w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full border border-[var(--chad-green)]/20 border-dashed animate-spin-slow-reverse" />
-              <div className="absolute inset-0 m-auto z-1 w-[450px] md:w-[900px] h-[450px] md:h-[900px] rounded-full border border-[var(--chad-purple)]/20 animate-spin-slow" />
+              <img
+                src="/images/fomo/inner-circle.webp"
+                alt=""
+                className="absolute inset-0 m-auto z-1 w-[80vw] md:w-[30vw] animate-[spin_30s_linear_infinite_reverse]"
+              />
+              <img
+                src="/images/fomo/outer-circle.webp"
+                alt=""
+                className="absolute inset-0 m-auto z-1 w-[150vw] md:w-[55vw] animate-[spin_45s_linear_infinite]"
+              />
             </div>
           </div>
         </div>
