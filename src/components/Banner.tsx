@@ -52,7 +52,8 @@ const mockTokens: Token[] = [
 ];
 
 export function Banner({ reverse = false }: { reverse?: boolean }) {
-  const [tokens, setTokens] = useState<Token[]>(mockTokens);
+  const [tokens, setTokens] = useState<Token[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch("/api/trending")
@@ -62,7 +63,8 @@ export function Banner({ reverse = false }: { reverse?: boolean }) {
           setTokens(data.data);
         }
       })
-      .catch((err) => console.error("Error fetching trending tokens:", err));
+      .catch((err) => console.error("Error fetching trending tokens:", err))
+      .finally(() => setIsLoading(false));
   }, []);
 
   // Duplicate tokens to create a seamless infinite scroll effect
@@ -73,32 +75,51 @@ export function Banner({ reverse = false }: { reverse?: boolean }) {
       <div
         className={`flex w-max space-x-8 animate-[marquee_60s_linear_infinite] ${reverse ? "[animation-direction:reverse]" : ""} hover:[animation-play-state:paused]`}
       >
-        {displayTokens.map((token, idx) => (
-          <Link
-            key={`${token.address}-${idx}`}
-            href={`/trade?token=${token.address}`}
-            className="flex items-center space-x-3 shrink-0 px-4 py-1 rounded-full hover:bg-zinc-800 transition-colors cursor-pointer group"
-          >
-            {/* Placeholder logo if none */}
-            <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[var(--chad-green)] to-[var(--chad-purple)]" />
-            <span className="font-bold text-white group-hover:text-[var(--chad-green)] transition-colors">
-              {token.symbol}
-            </span>
-            <span className="text-zinc-400 font-mono">
-              $
-              {token.price.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 6,
-              })}
-            </span>
-            <span
-              className={`font-mono text-sm ${token.change24h >= 0 ? "text-[var(--chad-green)]" : "text-red-500"}`}
-            >
-              {token.change24h > 0 ? "+" : ""}
-              {token.change24h.toFixed(2)}%
-            </span>
-          </Link>
-        ))}
+        {isLoading
+          ? // Skeleton loader
+            Array.from({ length: 15 }).map((_, idx) => (
+              <div
+                key={`skel-${idx}`}
+                className="flex items-center space-x-3 shrink-0 px-4 py-1"
+              >
+                <div className="w-6 h-6 rounded-full bg-zinc-800 animate-pulse" />
+                <div className="w-16 h-4 bg-zinc-800 rounded animate-pulse" />
+                <div className="w-16 h-4 bg-zinc-800 rounded animate-pulse" />
+              </div>
+            ))
+          : displayTokens.map((token, idx) => (
+              <Link
+                key={`${token.address}-${idx}`}
+                href={`/trade/${token.address}`}
+                className="flex items-center space-x-3 shrink-0 px-4 py-1 rounded-full hover:bg-zinc-800 transition-colors cursor-pointer group"
+              >
+                {token.logoURI ? (
+                  <img
+                    src={token.logoURI}
+                    alt={token.symbol}
+                    className="w-6 h-6 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[var(--chad-green)] to-[var(--chad-purple)]" />
+                )}
+                <span className="font-bold text-white group-hover:text-[var(--chad-green)] transition-colors">
+                  {token.symbol}
+                </span>
+                <span className="text-zinc-400 font-mono">
+                  $
+                  {token.price.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 6,
+                  })}
+                </span>
+                <span
+                  className={`font-mono text-sm ${token.change24h >= 0 ? "text-[var(--chad-green)]" : "text-red-500"}`}
+                >
+                  {token.change24h > 0 ? "+" : ""}
+                  {token.change24h.toFixed(2)}%
+                </span>
+              </Link>
+            ))}
       </div>
     </div>
   );

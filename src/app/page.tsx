@@ -1,6 +1,7 @@
 import { Header } from "@/components/Header";
 import { FeatureCard } from "@/components/FeatureCard";
 import { Footer } from "@/components/Footer";
+import { Banner } from "@/components/Banner";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,6 +11,9 @@ export default function Home() {
       <Header />
 
       <main className="flex flex-col items-center justify-center flex-1 h-full w-full">
+        {/* Top Banner */}
+        <Banner />
+
         {/* Hero Background Placeholder */}
         <div className="absolute top-0 left-0 w-full h-[800px] -z-10 pointer-events-none select-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[var(--chad-green)]/15 via-bg-primary to-bg-primary" />
 
@@ -340,6 +344,9 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Bottom Banner */}
+        <Banner reverse />
       </main>
 
       <Footer />
