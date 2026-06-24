@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import { use, useEffect, useState } from "react";
 import { Token } from "@/components/Banner";
@@ -70,7 +71,9 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
               >
                 <div className="flex items-center gap-3">
                   {t.logoURI ? (
-                    <img
+                    <Image
+                      width={24}
+                      height={24}
                       src={t.logoURI}
                       alt={t.symbol}
                       className="w-8 h-8 rounded-full object-cover"
@@ -107,7 +110,9 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
             {isOverviewLoading ? (
               <div className="w-12 h-12 rounded-full bg-zinc-800 animate-pulse" />
             ) : overview?.logoURI ? (
-              <img
+              <Image
+                width={24}
+                height={24}
                 src={overview.logoURI}
                 alt={overview.symbol}
                 className="w-12 h-12 rounded-full object-cover"

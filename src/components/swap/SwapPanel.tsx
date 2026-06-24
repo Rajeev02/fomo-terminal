@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
@@ -185,7 +186,9 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
             <div className="flex items-center gap-2 bg-zinc-800 px-3 py-1.5 rounded-lg border border-zinc-700 shrink-0">
               {swapTab === "buy" ? (
                 <>
-                  <img
+                  <Image
+                    width={24}
+                    height={24}
                     src="/images/logo.png"
                     alt="SOL"
                     className="w-5 h-5 rounded-full"
@@ -195,7 +198,9 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
               ) : (
                 <>
                   {selectedToken?.logoURI ? (
-                    <img
+                    <Image
+                      width={24}
+                      height={24}
                       src={selectedToken.logoURI}
                       alt="Token"
                       className="w-5 h-5 rounded-full"
@@ -238,7 +243,9 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
             <div className="flex items-center gap-2 bg-zinc-800 px-3 py-1.5 rounded-lg border border-zinc-700 shrink-0">
               {swapTab === "sell" ? (
                 <>
-                  <img
+                  <Image
+                    width={24}
+                    height={24}
                     src="/images/logo.png"
                     alt="SOL"
                     className="w-5 h-5 rounded-full"
@@ -248,7 +255,9 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
               ) : (
                 <>
                   {selectedToken?.logoURI ? (
-                    <img
+                    <Image
+                      width={24}
+                      height={24}
                       src={selectedToken.logoURI}
                       alt="Token"
                       className="w-5 h-5 rounded-full"

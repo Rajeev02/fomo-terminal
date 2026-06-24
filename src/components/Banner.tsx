@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -95,7 +96,9 @@ export function Banner({ reverse = false }: { reverse?: boolean }) {
                 className="flex items-center space-x-3 shrink-0 px-4 py-1 rounded-full hover:bg-zinc-800 transition-colors cursor-pointer group"
               >
                 {token.logoURI ? (
-                  <img
+                  <Image
+                    width={24}
+                    height={24}
                     src={token.logoURI}
                     alt={token.symbol}
                     className="w-6 h-6 rounded-full object-cover"
