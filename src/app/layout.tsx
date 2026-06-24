@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
-import { Header } from "@/components/Header";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FomoTerminal",
+  title: "ChadWallet",
   description: "The fastest, most premium Solana wallet and trading terminal.",
 };
 
@@ -31,8 +31,8 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <Providers>
-          <Header />
           {children}
+          <Toaster theme="dark" position="bottom-right" />
         </Providers>
       </body>
     </html>
