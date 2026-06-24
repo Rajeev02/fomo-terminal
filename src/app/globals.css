@@ -1,10 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #09090b;
-  --foreground: #fafafa;
+  --background: #060510;
+  --foreground: #EAEDFF;
   --chad-green: #39FF14;
   --chad-purple: #9D00FF;
+  --bg-secondary: #111116;
+  --bg-tertiary: #1A1A24;
 }
 
 @theme inline {
@@ -12,15 +14,28 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--chad-green);
   --color-secondary: var(--chad-purple);
+  --color-bg-primary: var(--background);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   
   --animate-marquee: marquee 60s linear infinite;
+  --animate-float-mobile: float 10s ease-in-out infinite;
+  --animate-float-desktop: float 4s ease-in-out infinite;
+  --animate-spin-slow: spin 45s linear infinite;
+  --animate-spin-slow-reverse: spin 30s linear infinite reverse;
 }
 
 @keyframes marquee {
   0% { transform: translateX(0%); }
   100% { transform: translateX(-100%); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
 }
 
 body {
