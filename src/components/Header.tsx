@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Apple, Smartphone, LogIn } from "lucide-react";
+import { Apple, Smartphone } from "lucide-react";
+import { AuthButton } from "./auth/AuthButton";
 
 export function Header() {
   return (
@@ -30,9 +31,7 @@ export function Header() {
         >
           <Smartphone size={18} className="mr-2" /> Android
         </Link>
-        <button className="bg-bg-secondary ring-1 ring-bg-tertiary hover:bg-bg-secondary/80 h-10 px-5 rounded-lg font-bold flex items-center gap-2 text-sm ml-2">
-          <LogIn size={16} /> Login
-        </button>
+        <AuthButton />
       </div>
     </header>
   );
