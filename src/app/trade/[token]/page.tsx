@@ -1,9 +1,13 @@
 "use client";
 
-import { use } from "react";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Token } from "@/components/Banner";
 import { PortfolioBalances } from "@/components/wallet/PortfolioBalances";
+import {
+  useTokenOverview,
+  useLiveTrades,
+  useTokenHolders,
+} from "@/hooks/useBirdeye";
 import Link from "next/link";
 import {
   Copy,
@@ -19,6 +23,13 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
   const [swapTab, setSwapTab] = useState<"buy" | "sell">("buy");
   const [activeTab, setActiveTab] = useState<"trades" | "holders">("trades");
 
+  const { data: overview, isLoading: isOverviewLoading } =
+    useTokenOverview(tokenAddress);
+  const { data: trades, isLoading: isTradesLoading } =
+    useLiveTrades(tokenAddress);
+  const { data: holders, isLoading: isHoldersLoading } =
+    useTokenHolders(tokenAddress);
+
   useEffect(() => {
     fetch("/api/trending")
       .then((res) => res.json())
@@ -33,7 +44,7 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
   const isLoading = trendingTokens.length === 0;
 
   function formatNumber(num: number | undefined) {
-    if (num === undefined) return "0.00";
+    if (num === undefined || num === 0) return "0.00";
     if (num >= 1e9) return (num / 1e9).toFixed(2) + "B";
     if (num >= 1e6) return (num / 1e6).toFixed(2) + "M";
     if (num >= 1e3) return (num / 1e3).toFixed(2) + "K";
@@ -99,19 +110,23 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
         {/* Token Info Header */}
         <div className="p-4 border-b border-zinc-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            {selectedToken?.logoURI ? (
+            {isOverviewLoading ? (
+              <div className="w-12 h-12 rounded-full bg-zinc-800 animate-pulse" />
+            ) : overview?.logoURI ? (
               <img
-                src={selectedToken.logoURI}
-                alt={selectedToken.symbol}
+                src={overview.logoURI}
+                alt={overview.symbol}
                 className="w-12 h-12 rounded-full object-cover"
               />
             ) : (
-              <div className="w-12 h-12 rounded-full bg-zinc-800 animate-pulse" />
+              <div className="w-12 h-12 rounded-full bg-zinc-800" />
             )}
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-2xl font-black text-white">
-                  {selectedToken?.symbol || "Loading..."}
+                  {isOverviewLoading
+                    ? "Loading..."
+                    : overview?.symbol || "Unknown"}
                 </h1>
                 <span className="text-zinc-500 text-sm bg-zinc-900 px-2 py-0.5 rounded-full border border-zinc-800">
                   / USD
@@ -133,22 +148,25 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
           </div>
           <div className="flex flex-col items-end">
             <div className="text-3xl text-[var(--chad-green)] font-mono font-bold">
-              ${selectedToken?.price.toFixed(4) || "0.0000"}
+              $
+              {isOverviewLoading
+                ? "0.00"
+                : overview?.price?.toFixed(6) || "0.00"}
             </div>
             <div
               className={`text-sm font-bold flex items-center gap-1 ${
-                (selectedToken?.change24h || 0) >= 0
+                (overview?.v24hChangePercent || 0) >= 0
                   ? "text-[var(--chad-green)]"
                   : "text-red-500"
               }`}
             >
-              {(selectedToken?.change24h || 0) >= 0 ? (
+              {(overview?.v24hChangePercent || 0) >= 0 ? (
                 <TrendingUp size={14} />
               ) : (
                 <TrendingDown size={14} />
               )}
-              {(selectedToken?.change24h || 0) >= 0 ? "+" : ""}
-              {selectedToken?.change24h.toFixed(2) || "0.00"}% (24h)
+              {(overview?.v24hChangePercent || 0) >= 0 ? "+" : ""}
+              {overview?.v24hChangePercent?.toFixed(2) || "0.00"}% (24h)
             </div>
           </div>
         </div>
@@ -159,27 +177,49 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
             <span className="text-xs text-zinc-500 font-bold tracking-wider">
               MARKET CAP
             </span>
-            <span className="text-lg font-mono text-white">
-              ${formatNumber((selectedToken?.price || 0) * 1e9)}
-            </span>
+            {isOverviewLoading ? (
+              <div className="h-6 w-20 bg-zinc-800 rounded animate-pulse" />
+            ) : (
+              <span className="text-lg font-mono text-white">
+                ${formatNumber(overview?.mc)}
+              </span>
+            )}
           </div>
           <div className="p-4 border-r border-b md:border-b-0 border-zinc-800 flex flex-col gap-1">
             <span className="text-xs text-zinc-500 font-bold tracking-wider">
               24H VOLUME
             </span>
-            <span className="text-lg font-mono text-white">$14.2M</span>
+            {isOverviewLoading ? (
+              <div className="h-6 w-20 bg-zinc-800 rounded animate-pulse" />
+            ) : (
+              <span className="text-lg font-mono text-white">
+                ${formatNumber(overview?.v24hUSD)}
+              </span>
+            )}
           </div>
           <div className="p-4 border-r border-zinc-800 flex flex-col gap-1">
             <span className="text-xs text-zinc-500 font-bold tracking-wider">
               LIQUIDITY
             </span>
-            <span className="text-lg font-mono text-white">$2.1M</span>
+            {isOverviewLoading ? (
+              <div className="h-6 w-20 bg-zinc-800 rounded animate-pulse" />
+            ) : (
+              <span className="text-lg font-mono text-white">
+                ${formatNumber(overview?.liquidity)}
+              </span>
+            )}
           </div>
           <div className="p-4 flex flex-col gap-1">
             <span className="text-xs text-zinc-500 font-bold tracking-wider">
-              HOLDERS
+              SUPPLY
             </span>
-            <span className="text-lg font-mono text-white">12,405</span>
+            {isOverviewLoading ? (
+              <div className="h-6 w-20 bg-zinc-800 rounded animate-pulse" />
+            ) : (
+              <span className="text-lg font-mono text-white">
+                {formatNumber(overview?.supply)}
+              </span>
+            )}
           </div>
         </div>
 
@@ -222,10 +262,101 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
                 TOP HOLDERS
               </button>
             </div>
-            <div className="flex-1 p-4 flex items-center justify-center text-zinc-500 italic text-sm">
-              {activeTab === "trades"
-                ? "Connecting to real-time transaction stream..."
-                : "Loading wallet distribution data..."}
+            <div className="flex-1 overflow-y-auto">
+              {activeTab === "trades" ? (
+                isTradesLoading ? (
+                  <div className="p-4 space-y-2">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="h-6 bg-zinc-800 rounded animate-pulse"
+                      />
+                    ))}
+                  </div>
+                ) : trades?.length ? (
+                  <table className="w-full text-sm text-left font-mono">
+                    <thead className="text-xs text-zinc-500 sticky top-0 bg-zinc-950">
+                      <tr>
+                        <th className="px-4 py-2 font-normal">TIME</th>
+                        <th className="px-4 py-2 font-normal">TYPE</th>
+                        <th className="px-4 py-2 font-normal">USD</th>
+                        <th className="px-4 py-2 font-normal">TOKENS</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-zinc-800/50">
+                      {trades.map((t, i) => (
+                        <tr key={i} className="hover:bg-zinc-900/50">
+                          <td className="px-4 py-2 text-zinc-400">
+                            {new Date(t.blockTime * 1000).toLocaleTimeString(
+                              [],
+                              { hour12: false }
+                            )}
+                          </td>
+                          <td
+                            className={`px-4 py-2 font-bold ${t.side === "buy" ? "text-[var(--chad-green)]" : "text-red-500"}`}
+                          >
+                            {t.side.toUpperCase()}
+                          </td>
+                          <td className="px-4 py-2">
+                            ${t.volumeUSD.toFixed(2)}
+                          </td>
+                          <td className="px-4 py-2">
+                            {t.tokens.toLocaleString()}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <div className="p-4 text-center text-zinc-500 italic text-sm">
+                    No recent trades found.
+                  </div>
+                )
+              ) : isHoldersLoading ? (
+                <div className="p-4 space-y-2">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="h-6 bg-zinc-800 rounded animate-pulse"
+                    />
+                  ))}
+                </div>
+              ) : holders?.length ? (
+                <table className="w-full text-sm text-left font-mono">
+                  <thead className="text-xs text-zinc-500 sticky top-0 bg-zinc-950">
+                    <tr>
+                      <th className="px-4 py-2 font-normal">RANK</th>
+                      <th className="px-4 py-2 font-normal">ADDRESS</th>
+                      <th className="px-4 py-2 font-normal">AMOUNT</th>
+                      <th className="px-4 py-2 font-normal">% SUPPLY</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-800/50">
+                    {holders.map((h, i) => (
+                      <tr key={i} className="hover:bg-zinc-900/50">
+                        <td className="px-4 py-2 text-zinc-500">#{i + 1}</td>
+                        <td className="px-4 py-2">
+                          {h.owner.slice(0, 4)}...{h.owner.slice(-4)}
+                        </td>
+                        <td className="px-4 py-2">
+                          {h.uiAmount.toLocaleString()}
+                        </td>
+                        <td className="px-4 py-2">
+                          {(
+                            (h.uiAmount / (overview?.supply || 1)) *
+                            100
+                          ).toFixed(2)}
+                          %
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div className="p-4 text-center text-zinc-500 italic text-sm">
+                  No holders data found.
+                </div>
+              )}
             </div>
           </div>
         </div>
