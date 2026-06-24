@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
 import { Token } from "@/components/Banner";
+import { PortfolioBalances } from "@/components/wallet/PortfolioBalances";
 
 function TradeContent() {
   const searchParams = useSearchParams();
@@ -23,35 +24,9 @@ function TradeContent() {
 
   return (
     <div className="flex-1 flex flex-col lg:flex-row h-full overflow-hidden bg-background">
-      {/* Left Column: Trending List */}
+      {/* Left Column: Portfolio */}
       <aside className="w-full lg:w-80 border-r border-zinc-800 flex flex-col bg-zinc-950/50">
-        <div className="p-4 border-b border-zinc-800">
-          <h2 className="font-bold text-lg">Trending Tokens</h2>
-        </div>
-        <div className="flex-1 overflow-y-auto">
-          {trendingTokens.map((t) => (
-            <div
-              key={t.address}
-              className={`p-4 border-b border-zinc-800/50 hover:bg-zinc-800/50 cursor-pointer flex items-center justify-between ${t.address === tokenAddress ? "bg-zinc-800/80 border-l-2 border-l-[var(--chad-green)]" : ""}`}
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[var(--chad-green)] to-[var(--chad-purple)]" />
-                <div>
-                  <div className="font-bold">{t.symbol}</div>
-                  <div className="text-sm text-zinc-500">
-                    ${t.price.toFixed(4)}
-                  </div>
-                </div>
-              </div>
-              <div
-                className={`text-sm ${t.change24h >= 0 ? "text-[var(--chad-green)]" : "text-red-500"}`}
-              >
-                {t.change24h >= 0 ? "+" : ""}
-                {t.change24h.toFixed(2)}%
-              </div>
-            </div>
-          ))}
-        </div>
+        <PortfolioBalances />
       </aside>
 
       {/* Middle Column: Chart & Info */}

@@ -1,7 +1,8 @@
 import { usePrivy, useWallets } from "@privy-io/react-auth";
 
 export function useAuth() {
-  const { ready, authenticated, user, login, logout } = usePrivy();
+  const { ready, authenticated, user, login, logout, createWallet } =
+    usePrivy();
   const { wallets } = useWallets();
 
   // Privy supports embedded wallets, so we can find the Solana wallet attached to the user if any.
@@ -24,5 +25,6 @@ export function useAuth() {
     walletAddress: activeWallet?.address,
     login,
     logout,
+    createWallet,
   };
 }
