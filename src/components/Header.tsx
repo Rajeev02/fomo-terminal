@@ -8,6 +8,11 @@ export function Header() {
         href="/"
         className="flex items-center text-foreground font-black text-2xl tracking-tighter hover:opacity-80 transition-opacity"
       >
+        <img
+          src="/images/logo.png"
+          alt="ChadWallet Logo"
+          className="w-8 h-8 mr-2"
+        />
         CHAD<span className="text-[var(--chad-green)]">WALLET</span>
       </Link>
       <div className="flex gap-3">

@@ -1,9 +1,9 @@
 import { Header } from "@/components/Header";
 import { FeatureCard } from "@/components/FeatureCard";
 import { Footer } from "@/components/Footer";
-import { ArrowRight, Apple, Smartphone } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-
+import Image from "next/image";
 export default function Home() {
   return (
     <div className="relative isolate flex flex-col min-h-screen bg-bg-primary overflow-x-hidden selection:bg-[var(--chad-green)] selection:text-black">
@@ -29,18 +29,28 @@ export default function Home() {
             <Link
               href="https://apps.apple.com/us/app/chadwallet/id6757367474"
               target="_blank"
-              className="text-center z-10 bg-white/10 backdrop-blur-md border border-white/10 rounded-xl font-bold w-full py-3 px-4 text-white hover:bg-white/20 transition-colors flex items-center justify-center gap-2"
+              className="inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
             >
-              <Apple size={20} />
-              iOS
+              <Image
+                src="/images/app-store.png"
+                alt="Download on the App Store"
+                width={192}
+                height={64}
+                className="h-[3rem] w-auto"
+              />
             </Link>
             <Link
               href="https://play.google.com/store/apps/details?id=xyz.chadwallet.www"
               target="_blank"
-              className="text-center z-10 bg-white/10 backdrop-blur-md border border-white/10 rounded-xl font-bold w-full py-3 px-4 text-white hover:bg-white/20 transition-colors flex items-center justify-center gap-2"
+              className="inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
             >
-              <Smartphone size={20} />
-              Android
+              <Image
+                src="/images/google-play.png"
+                alt="Get it on Google Play"
+                width={216}
+                height={64}
+                className="h-[3rem] w-auto"
+              />
             </Link>
           </div>
 
@@ -54,18 +64,28 @@ export default function Home() {
             <Link
               href="https://apps.apple.com/us/app/chadwallet/id6757367474"
               target="_blank"
-              className="z-10 group bg-white/5 hover:bg-white/10 backdrop-blur-md transition-colors duration-150 border border-white/10 text-white rounded-xl px-6 font-bold flex items-center justify-center overflow-hidden"
+              className="inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
             >
-              <Apple className="size-5 mr-2 shrink-0" />
-              <span>App Store</span>
+              <Image
+                src="/images/app-store.png"
+                alt="Download on the App Store"
+                width={192}
+                height={64}
+                className="h-[3.1rem] w-auto"
+              />
             </Link>
             <Link
               href="https://play.google.com/store/apps/details?id=xyz.chadwallet.www"
               target="_blank"
-              className="z-10 group bg-white/5 hover:bg-white/10 backdrop-blur-md transition-colors duration-150 border border-white/10 text-white rounded-xl px-6 font-bold flex items-center justify-center overflow-hidden"
+              className="inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
             >
-              <Smartphone className="size-5 mr-2 shrink-0" />
-              <span>Google Play</span>
+              <Image
+                src="/images/google-play.png"
+                alt="Get it on Google Play"
+                width={216}
+                height={64}
+                className="h-[3.1rem] w-auto"
+              />
             </Link>
           </div>
         </div>
@@ -98,18 +118,28 @@ export default function Home() {
                 <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
                 <div className="w-3 h-3 rounded-full bg-green-500/50" />
               </div>
-              <div className="mt-8 p-8 h-full bg-gradient-to-b from-bg-tertiary to-bg-primary opacity-50 flex items-center justify-center">
-                <span className="font-mono text-zinc-600">
-                  [DESKTOP UI MOCKUP]
+              <div className="mt-8 p-8 h-full bg-gradient-to-b from-bg-tertiary to-bg-primary flex items-center justify-center overflow-hidden relative">
+                <Image
+                  src="/images/logo.png"
+                  alt="ChadWallet Logo"
+                  width={200}
+                  height={200}
+                  className="opacity-10 absolute mix-blend-overlay w-[400px] h-[400px]"
+                />
+                <span className="font-mono text-zinc-600 z-10 text-2xl font-black">
+                  [CHADWALLET DESKTOP BETA]
                 </span>
               </div>
             </div>
-            <div className="w-[260px] h-[520px] bg-black rounded-[3rem] border-[8px] border-zinc-800 shadow-2xl absolute -right-4 bottom-[-100px] animate-float-desktop z-20 overflow-hidden">
-              <div className="w-full h-full bg-gradient-to-b from-bg-tertiary to-bg-primary opacity-80 flex items-center justify-center">
-                <span className="font-mono text-zinc-600 text-sm">
-                  [MOBILE UI MOCKUP]
-                </span>
-              </div>
+            <div className="w-[260px] h-[520px] bg-black rounded-[3rem] border-[8px] border-zinc-800 shadow-2xl absolute -right-4 bottom-[-100px] animate-float-desktop z-20 overflow-hidden flex items-center justify-center relative">
+              <video
+                src="/images/chadwallet.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem]"
+              />
             </div>
           </div>
         </div>
@@ -184,18 +214,28 @@ export default function Home() {
                     <Link
                       href="https://apps.apple.com/us/app/chadwallet/id6757367474"
                       target="_blank"
-                      className="text-center z-10 bg-[var(--chad-green)] text-black rounded-xl font-bold w-full py-3 px-6 flex items-center justify-center gap-2"
+                      className="inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
                     >
-                      <Apple size={20} />
-                      iOS
+                      <Image
+                        src="/images/app-store.png"
+                        alt="Download on the App Store"
+                        width={192}
+                        height={64}
+                        className="h-[3rem] w-auto"
+                      />
                     </Link>
                     <Link
                       href="https://play.google.com/store/apps/details?id=xyz.chadwallet.www"
                       target="_blank"
-                      className="text-center z-10 bg-[var(--chad-green)] text-black rounded-xl font-bold w-full py-3 px-6 flex items-center justify-center gap-2"
+                      className="inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
                     >
-                      <Smartphone size={20} />
-                      Android
+                      <Image
+                        src="/images/google-play.png"
+                        alt="Get it on Google Play"
+                        width={216}
+                        height={64}
+                        className="h-[3rem] w-auto"
+                      />
                     </Link>
                   </div>
                   <div className="hidden md:flex gap-4">
@@ -208,18 +248,28 @@ export default function Home() {
                     <Link
                       href="https://apps.apple.com/us/app/chadwallet/id6757367474"
                       target="_blank"
-                      className="z-10 group bg-white/5 hover:bg-white/10 backdrop-blur-md transition-colors duration-150 border border-white/10 text-white rounded-xl px-6 font-bold flex items-center justify-center overflow-hidden"
+                      className="inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
                     >
-                      <Apple className="size-5 mr-2 shrink-0" />
-                      <span>App Store</span>
+                      <Image
+                        src="/images/app-store.png"
+                        alt="Download on the App Store"
+                        width={192}
+                        height={64}
+                        className="h-[3.1rem] w-auto"
+                      />
                     </Link>
                     <Link
                       href="https://play.google.com/store/apps/details?id=xyz.chadwallet.www"
                       target="_blank"
-                      className="z-10 group bg-white/5 hover:bg-white/10 backdrop-blur-md transition-colors duration-150 border border-white/10 text-white rounded-xl px-6 font-bold flex items-center justify-center overflow-hidden"
+                      className="inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
                     >
-                      <Smartphone className="size-5 mr-2 shrink-0" />
-                      <span>Google Play</span>
+                      <Image
+                        src="/images/google-play.png"
+                        alt="Get it on Google Play"
+                        width={216}
+                        height={64}
+                        className="h-[3.1rem] w-auto"
+                      />
                     </Link>
                   </div>
                 </div>
