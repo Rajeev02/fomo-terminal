@@ -4,9 +4,20 @@ import { use } from "react";
 import { useEffect, useState } from "react";
 import { Token } from "@/components/Banner";
 import { PortfolioBalances } from "@/components/wallet/PortfolioBalances";
+import Link from "next/link";
+import {
+  Copy,
+  TrendingUp,
+  TrendingDown,
+  Users,
+  Activity,
+  BarChart2,
+} from "lucide-react";
 
 function TradeContent({ tokenAddress }: { tokenAddress: string }) {
   const [trendingTokens, setTrendingTokens] = useState<Token[]>([]);
+  const [swapTab, setSwapTab] = useState<"buy" | "sell">("buy");
+  const [activeTab, setActiveTab] = useState<"trades" | "holders">("trades");
 
   useEffect(() => {
     fetch("/api/trending")
@@ -19,87 +30,307 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
   }, []);
 
   const selectedToken = trendingTokens.find((t) => t.address === tokenAddress);
+  const isLoading = trendingTokens.length === 0;
+
+  function formatNumber(num: number | undefined) {
+    if (num === undefined) return "0.00";
+    if (num >= 1e9) return (num / 1e9).toFixed(2) + "B";
+    if (num >= 1e6) return (num / 1e6).toFixed(2) + "M";
+    if (num >= 1e3) return (num / 1e3).toFixed(2) + "K";
+    return num.toFixed(2);
+  }
 
   return (
     <div className="flex-1 flex flex-col lg:flex-row h-full overflow-hidden bg-background">
-      {/* Left Column: Portfolio */}
+      {/* Left Column: Trending List */}
       <aside className="w-full lg:w-80 border-r border-zinc-800 flex flex-col bg-zinc-950/50">
-        <PortfolioBalances />
+        <div className="p-4 border-b border-zinc-800 flex items-center justify-between">
+          <h2 className="font-bold text-lg text-white">Trending Tokens</h2>
+        </div>
+        <div className="flex-1 overflow-y-auto custom-scrollbar">
+          {isLoading ? (
+            <div className="p-8 text-center text-zinc-500 animate-pulse">
+              Loading trends...
+            </div>
+          ) : (
+            trendingTokens.map((t) => (
+              <Link
+                href={`/trade/${t.address}`}
+                key={t.address}
+                className={`p-4 border-b border-zinc-800/50 hover:bg-zinc-800/50 cursor-pointer flex items-center justify-between transition-colors ${
+                  t.address === tokenAddress
+                    ? "bg-zinc-800/80 border-l-2 border-l-[var(--chad-green)]"
+                    : "border-l-2 border-transparent"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  {t.logoURI ? (
+                    <img
+                      src={t.logoURI}
+                      alt={t.symbol}
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[var(--chad-green)] to-[var(--chad-purple)]" />
+                  )}
+                  <div>
+                    <div className="font-bold text-sm text-white">
+                      {t.symbol}
+                    </div>
+                    <div className="text-xs text-zinc-500">
+                      ${t.price.toFixed(4)}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className={`text-sm font-mono ${t.change24h >= 0 ? "text-[var(--chad-green)]" : "text-red-500"}`}
+                >
+                  {t.change24h >= 0 ? "+" : ""}
+                  {t.change24h.toFixed(2)}%
+                </div>
+              </Link>
+            ))
+          )}
+        </div>
       </aside>
 
       {/* Middle Column: Chart & Info */}
-      <main className="flex-1 flex flex-col border-r border-zinc-800 min-h-[500px]">
-        <div className="p-4 border-b border-zinc-800 flex items-center justify-between">
+      <main className="flex-1 flex flex-col border-r border-zinc-800 min-w-0 bg-black overflow-y-auto custom-scrollbar">
+        {/* Token Info Header */}
+        <div className="p-4 border-b border-zinc-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <h1 className="text-2xl font-black">
-              {selectedToken?.symbol || "Loading..."} / USD
-            </h1>
-            <span className="text-xl text-[var(--chad-green)] font-mono">
-              ${selectedToken?.price.toFixed(4) || "0.00"}
-            </span>
+            {selectedToken?.logoURI ? (
+              <img
+                src={selectedToken.logoURI}
+                alt={selectedToken.symbol}
+                className="w-12 h-12 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-12 h-12 rounded-full bg-zinc-800 animate-pulse" />
+            )}
+            <div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-2xl font-black text-white">
+                  {selectedToken?.symbol || "Loading..."}
+                </h1>
+                <span className="text-zinc-500 text-sm bg-zinc-900 px-2 py-0.5 rounded-full border border-zinc-800">
+                  / USD
+                </span>
+              </div>
+              <div className="flex items-center gap-2 mt-1">
+                <span className="text-sm font-mono text-zinc-400">
+                  {tokenAddress.slice(0, 8)}...{tokenAddress.slice(-8)}
+                </span>
+                <button
+                  onClick={() => navigator.clipboard.writeText(tokenAddress)}
+                  className="text-zinc-500 hover:text-white transition-colors"
+                  title="Copy address"
+                >
+                  <Copy size={14} />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col items-end">
+            <div className="text-3xl text-[var(--chad-green)] font-mono font-bold">
+              ${selectedToken?.price.toFixed(4) || "0.0000"}
+            </div>
+            <div
+              className={`text-sm font-bold flex items-center gap-1 ${
+                (selectedToken?.change24h || 0) >= 0
+                  ? "text-[var(--chad-green)]"
+                  : "text-red-500"
+              }`}
+            >
+              {(selectedToken?.change24h || 0) >= 0 ? (
+                <TrendingUp size={14} />
+              ) : (
+                <TrendingDown size={14} />
+              )}
+              {(selectedToken?.change24h || 0) >= 0 ? "+" : ""}
+              {selectedToken?.change24h.toFixed(2) || "0.00"}% (24h)
+            </div>
           </div>
         </div>
-        <div className="flex-1 p-4 flex flex-col">
+
+        {/* Market Metrics Row */}
+        <div className="grid grid-cols-2 md:grid-cols-4 border-b border-zinc-800 bg-zinc-950/30">
+          <div className="p-4 border-r border-b md:border-b-0 border-zinc-800 flex flex-col gap-1">
+            <span className="text-xs text-zinc-500 font-bold tracking-wider">
+              MARKET CAP
+            </span>
+            <span className="text-lg font-mono text-white">
+              ${formatNumber((selectedToken?.price || 0) * 1e9)}
+            </span>
+          </div>
+          <div className="p-4 border-r border-b md:border-b-0 border-zinc-800 flex flex-col gap-1">
+            <span className="text-xs text-zinc-500 font-bold tracking-wider">
+              24H VOLUME
+            </span>
+            <span className="text-lg font-mono text-white">$14.2M</span>
+          </div>
+          <div className="p-4 border-r border-zinc-800 flex flex-col gap-1">
+            <span className="text-xs text-zinc-500 font-bold tracking-wider">
+              LIQUIDITY
+            </span>
+            <span className="text-lg font-mono text-white">$2.1M</span>
+          </div>
+          <div className="p-4 flex flex-col gap-1">
+            <span className="text-xs text-zinc-500 font-bold tracking-wider">
+              HOLDERS
+            </span>
+            <span className="text-lg font-mono text-white">12,405</span>
+          </div>
+        </div>
+
+        <div className="flex-1 p-4 flex flex-col gap-4">
           {/* Chart Placeholder */}
-          <div className="flex-1 bg-zinc-900 rounded-lg flex items-center justify-center border border-zinc-800 mb-4">
-            <p className="text-zinc-500">TradingView Chart (Coming Soon)</p>
+          <div className="h-[400px] shrink-0 bg-zinc-900 rounded-xl flex flex-col items-center justify-center border border-zinc-800 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-b from-[var(--chad-green)]/5 to-transparent pointer-events-none" />
+            <BarChart2 className="w-16 h-16 text-zinc-700 mb-4 group-hover:text-[var(--chad-green)] transition-colors" />
+            <h3 className="font-bold text-xl text-white mb-2">
+              TradingView Chart
+            </h3>
+            <p className="text-zinc-500">
+              Advanced candlestick chart integration coming soon.
+            </p>
           </div>
 
-          {/* Live Trades Stream Placeholder */}
-          <div className="h-48 bg-zinc-900 rounded-lg border border-zinc-800 p-4 overflow-y-auto">
-            <h3 className="font-bold mb-2">Live Trades</h3>
-            <div className="text-zinc-500 text-sm italic">
-              Connecting to stream...
+          {/* Lower Area: Tabs (Live Trades / Holders) */}
+          <div className="flex-1 flex flex-col bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden min-h-[300px]">
+            <div className="flex border-b border-zinc-800">
+              <button
+                onClick={() => setActiveTab("trades")}
+                className={`flex-1 p-3 text-sm font-bold flex items-center justify-center gap-2 transition-colors ${
+                  activeTab === "trades"
+                    ? "bg-zinc-900 text-[var(--chad-green)] border-b-2 border-[var(--chad-green)]"
+                    : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900/50"
+                }`}
+              >
+                <Activity size={16} />
+                LIVE TRADES
+              </button>
+              <button
+                onClick={() => setActiveTab("holders")}
+                className={`flex-1 p-3 text-sm font-bold flex items-center justify-center gap-2 transition-colors ${
+                  activeTab === "holders"
+                    ? "bg-zinc-900 text-[var(--chad-purple)] border-b-2 border-[var(--chad-purple)]"
+                    : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900/50"
+                }`}
+              >
+                <Users size={16} />
+                TOP HOLDERS
+              </button>
+            </div>
+            <div className="flex-1 p-4 flex items-center justify-center text-zinc-500 italic text-sm">
+              {activeTab === "trades"
+                ? "Connecting to real-time transaction stream..."
+                : "Loading wallet distribution data..."}
             </div>
           </div>
         </div>
       </main>
 
-      {/* Right Column: Swap Interface */}
-      <aside className="w-full lg:w-96 flex flex-col bg-zinc-950/50 p-4">
-        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
-          <h2 className="font-bold text-xl mb-6">Swap</h2>
-
-          <div className="space-y-4">
-            <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-3">
-              <div className="text-sm text-zinc-500 mb-1">You pay</div>
-              <div className="flex items-center justify-between">
-                <input
-                  type="number"
-                  placeholder="0.0"
-                  className="bg-transparent text-2xl w-full outline-none"
-                />
-                <button className="bg-zinc-800 px-3 py-1 rounded-full font-bold">
-                  SOL
-                </button>
-              </div>
+      {/* Right Column: Action & Position */}
+      <aside className="w-full lg:w-96 flex flex-col bg-zinc-950 overflow-y-auto custom-scrollbar">
+        {/* Top Half: Swap Panels */}
+        <div className="p-4 border-b border-zinc-800">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-xl">
+            {/* Buy/Sell Tabs */}
+            <div className="flex bg-zinc-950 rounded-xl p-1 mb-6 border border-zinc-800">
+              <button
+                onClick={() => setSwapTab("buy")}
+                className={`flex-1 py-2 text-center rounded-lg font-bold text-sm transition-colors ${
+                  swapTab === "buy"
+                    ? "bg-[var(--chad-green)] text-black"
+                    : "text-zinc-500 hover:text-white"
+                }`}
+              >
+                BUY
+              </button>
+              <button
+                onClick={() => setSwapTab("sell")}
+                className={`flex-1 py-2 text-center rounded-lg font-bold text-sm transition-colors ${
+                  swapTab === "sell"
+                    ? "bg-red-500 text-white"
+                    : "text-zinc-500 hover:text-white"
+                }`}
+              >
+                SELL
+              </button>
             </div>
 
-            <div className="flex justify-center -my-2 relative z-10">
-              <div className="bg-zinc-800 p-2 rounded-full border border-zinc-700">
-                ↓
+            <div className="space-y-4">
+              <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-3 focus-within:border-[var(--chad-green)] transition-colors">
+                <div className="text-xs text-zinc-500 font-bold mb-1 uppercase">
+                  You pay
+                </div>
+                <div className="flex items-center justify-between">
+                  <input
+                    type="number"
+                    placeholder="0.0"
+                    className="bg-transparent text-2xl w-full outline-none font-mono text-white placeholder:text-zinc-700"
+                  />
+                  <div className="flex items-center gap-2 bg-zinc-800 px-3 py-1.5 rounded-lg border border-zinc-700 shrink-0">
+                    <img
+                      src="/images/logo.png"
+                      alt="SOL"
+                      className="w-5 h-5 rounded-full"
+                    />
+                    <span className="font-bold text-sm text-white">SOL</span>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-3">
-              <div className="text-sm text-zinc-500 mb-1">You receive</div>
-              <div className="flex items-center justify-between">
-                <input
-                  type="number"
-                  placeholder="0.0"
-                  className="bg-transparent text-2xl w-full outline-none"
-                  readOnly
-                />
-                <button className="bg-zinc-800 px-3 py-1 rounded-full font-bold">
-                  {selectedToken?.symbol || "..."}
-                </button>
+              <div className="flex justify-center -my-3 relative z-10">
+                <div className="bg-zinc-800 p-2 rounded-xl border border-zinc-700 text-white shadow-lg">
+                  ↓
+                </div>
               </div>
-            </div>
 
-            <button className="w-full bg-[var(--chad-green)] text-black font-bold py-4 rounded-xl text-lg hover:bg-[#2ae00e] transition-colors mt-4">
-              Connect Wallet to Swap
-            </button>
+              <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-3 focus-within:border-[var(--chad-green)] transition-colors">
+                <div className="text-xs text-zinc-500 font-bold mb-1 uppercase">
+                  You receive
+                </div>
+                <div className="flex items-center justify-between">
+                  <input
+                    type="number"
+                    placeholder="0.0"
+                    className="bg-transparent text-2xl w-full outline-none font-mono text-white placeholder:text-zinc-700"
+                  />
+                  <div className="flex items-center gap-2 bg-zinc-800 px-3 py-1.5 rounded-lg border border-zinc-700 shrink-0">
+                    {selectedToken?.logoURI ? (
+                      <img
+                        src={selectedToken.logoURI}
+                        alt="Token"
+                        className="w-5 h-5 rounded-full"
+                      />
+                    ) : (
+                      <div className="w-5 h-5 rounded-full bg-[var(--chad-green)]" />
+                    )}
+                    <span className="font-bold text-sm text-white">
+                      {selectedToken?.symbol || "..."}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                className={`w-full font-black py-4 rounded-xl text-lg transition-colors shadow-lg mt-4 ${
+                  swapTab === "buy"
+                    ? "bg-[var(--chad-green)] text-black hover:bg-[#2ae00e] shadow-[var(--chad-green)]/20"
+                    : "bg-red-500 text-white hover:bg-red-400 shadow-red-500/20"
+                }`}
+              >
+                {swapTab === "buy" ? "Quick Buy" : "Quick Sell"}
+              </button>
+            </div>
           </div>
+        </div>
+
+        {/* Bottom Half: User Position (Portfolio) */}
+        <div className="flex-1">
+          <PortfolioBalances />
         </div>
       </aside>
     </div>
