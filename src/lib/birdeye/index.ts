@@ -3,7 +3,7 @@
 
 export class BirdEyeService {
   private static readonly API_KEY = process.env.BIRDEYE_API_KEY;
-  private static readonly BASE_URL = 'https://public-api.birdeye.so/defi';
+  private static readonly BASE_URL = "https://public-api.birdeye.so/defi";
 
   /**
    * Get the current price of a specific token

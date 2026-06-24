@@ -17,11 +17,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
   // If the user hasn't provided an App ID, we use a placeholder that bypasses build checks
-  const appId = process.env.NEXT_PUBLIC_PRIVY_APP_ID || "cltxxxmockappid1234567890";
+  const appId =
+    process.env.NEXT_PUBLIC_PRIVY_APP_ID || "cltxxxmockappid1234567890";
 
   if (!mounted) {
     return <>{children}</>;
@@ -42,13 +44,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
         embeddedWallets: {
           solana: {
             createOnLogin: "users-without-wallets",
-          }
+          },
         },
       }}
     >
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </PrivyProvider>
   );
 }

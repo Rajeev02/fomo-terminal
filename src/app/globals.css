@@ -2,11 +2,11 @@
 
 :root {
   --background: #060510;
-  --foreground: #EAEDFF;
-  --chad-green: #39FF14;
-  --chad-purple: #9D00FF;
+  --foreground: #eaedff;
+  --chad-green: #39ff14;
+  --chad-purple: #9d00ff;
   --bg-secondary: #111116;
-  --bg-tertiary: #1A1A24;
+  --bg-tertiary: #1a1a24;
 }
 
 @theme inline {
@@ -19,7 +19,7 @@
   --color-bg-tertiary: var(--bg-tertiary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  
+
   --animate-marquee: marquee 60s linear infinite;
   --animate-float-mobile: float 10s ease-in-out infinite;
   --animate-float-desktop: float 4s ease-in-out infinite;
@@ -28,14 +28,24 @@
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-100%); }
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 @keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 body {

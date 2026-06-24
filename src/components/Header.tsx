@@ -1,21 +1,26 @@
-import Link from 'next/link';
-import { Apple, Smartphone, LogIn } from 'lucide-react';
+import Link from "next/link";
+import { Apple, Smartphone, LogIn } from "lucide-react";
 
 export function Header() {
   return (
     <header className="items-center h-13 pt-4 pb-2 px-6 justify-between hidden md:flex sticky top-0 z-50 bg-bg-primary/80 backdrop-blur-lg border-b border-white/5">
-      <Link href="/" className="flex items-center text-foreground font-black text-2xl tracking-tighter hover:opacity-80 transition-opacity">
+      <Link
+        href="/"
+        className="flex items-center text-foreground font-black text-2xl tracking-tighter hover:opacity-80 transition-opacity"
+      >
         CHAD<span className="text-[var(--chad-green)]">WALLET</span>
       </Link>
       <div className="flex gap-3">
-        <Link 
-          href="#"
+        <Link
+          href="https://apps.apple.com/us/app/chadwallet/id6757367474"
+          target="_blank"
           className="bg-white/5 backdrop-blur-md rounded-md hover:ring-white/20 hover:ring-1 hover:bg-white/10 transition-all flex items-center justify-center px-4 py-2 border border-white/10 text-sm font-semibold"
         >
           <Apple size={18} className="mr-2" /> iOS
         </Link>
-        <Link 
-          href="#"
+        <Link
+          href="https://play.google.com/store/apps/details?id=xyz.chadwallet.www"
+          target="_blank"
           className="bg-white/5 backdrop-blur-md hover:ring-white/20 hover:ring-1 hover:bg-white/10 transition-all rounded-md flex items-center justify-center px-4 py-2 border border-white/10 text-sm font-semibold"
         >
           <Smartphone size={18} className="mr-2" /> Android
