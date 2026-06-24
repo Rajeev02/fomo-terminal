@@ -8,15 +8,9 @@ import {
   useLiveTrades,
   useTokenHolders,
 } from "@/hooks/useBirdeye";
+import { TradingViewChart } from "@/components/TradingViewChart";
 import Link from "next/link";
-import {
-  Copy,
-  TrendingUp,
-  TrendingDown,
-  Users,
-  Activity,
-  BarChart2,
-} from "lucide-react";
+import { Copy, TrendingUp, TrendingDown, Users, Activity } from "lucide-react";
 
 function TradeContent({ tokenAddress }: { tokenAddress: string }) {
   const [trendingTokens, setTrendingTokens] = useState<Token[]>([]);
@@ -224,16 +218,9 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
         </div>
 
         <div className="flex-1 p-4 flex flex-col gap-4">
-          {/* Chart Placeholder */}
-          <div className="h-[400px] shrink-0 bg-zinc-900 rounded-xl flex flex-col items-center justify-center border border-zinc-800 relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-b from-[var(--chad-green)]/5 to-transparent pointer-events-none" />
-            <BarChart2 className="w-16 h-16 text-zinc-700 mb-4 group-hover:text-[var(--chad-green)] transition-colors" />
-            <h3 className="font-bold text-xl text-white mb-2">
-              TradingView Chart
-            </h3>
-            <p className="text-zinc-500">
-              Advanced candlestick chart integration coming soon.
-            </p>
+          {/* Chart Area */}
+          <div className="h-[400px] shrink-0 w-full relative">
+            <TradingViewChart tokenAddress={tokenAddress} />
           </div>
 
           {/* Lower Area: Tabs (Live Trades / Holders) */}
