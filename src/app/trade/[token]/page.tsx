@@ -11,10 +11,10 @@ import {
 import { TradingViewChart } from "@/components/TradingViewChart";
 import Link from "next/link";
 import { Copy, TrendingUp, TrendingDown, Users, Activity } from "lucide-react";
+import { SwapPanel } from "@/components/swap/SwapPanel";
 
 function TradeContent({ tokenAddress }: { tokenAddress: string }) {
   const [trendingTokens, setTrendingTokens] = useState<Token[]>([]);
-  const [swapTab, setSwapTab] = useState<"buy" | "sell">("buy");
   const [activeTab, setActiveTab] = useState<"trades" | "holders">("trades");
 
   const { data: overview, isLoading: isOverviewLoading } =
@@ -353,97 +353,10 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
       <aside className="w-full lg:w-96 flex flex-col bg-zinc-950 overflow-y-auto custom-scrollbar">
         {/* Top Half: Swap Panels */}
         <div className="p-4 border-b border-zinc-800">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-xl">
-            {/* Buy/Sell Tabs */}
-            <div className="flex bg-zinc-950 rounded-xl p-1 mb-6 border border-zinc-800">
-              <button
-                onClick={() => setSwapTab("buy")}
-                className={`flex-1 py-2 text-center rounded-lg font-bold text-sm transition-colors ${
-                  swapTab === "buy"
-                    ? "bg-[var(--chad-green)] text-black"
-                    : "text-zinc-500 hover:text-white"
-                }`}
-              >
-                BUY
-              </button>
-              <button
-                onClick={() => setSwapTab("sell")}
-                className={`flex-1 py-2 text-center rounded-lg font-bold text-sm transition-colors ${
-                  swapTab === "sell"
-                    ? "bg-red-500 text-white"
-                    : "text-zinc-500 hover:text-white"
-                }`}
-              >
-                SELL
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-3 focus-within:border-[var(--chad-green)] transition-colors">
-                <div className="text-xs text-zinc-500 font-bold mb-1 uppercase">
-                  You pay
-                </div>
-                <div className="flex items-center justify-between">
-                  <input
-                    type="number"
-                    placeholder="0.0"
-                    className="bg-transparent text-2xl w-full outline-none font-mono text-white placeholder:text-zinc-700"
-                  />
-                  <div className="flex items-center gap-2 bg-zinc-800 px-3 py-1.5 rounded-lg border border-zinc-700 shrink-0">
-                    <img
-                      src="/images/logo.png"
-                      alt="SOL"
-                      className="w-5 h-5 rounded-full"
-                    />
-                    <span className="font-bold text-sm text-white">SOL</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-center -my-3 relative z-10">
-                <div className="bg-zinc-800 p-2 rounded-xl border border-zinc-700 text-white shadow-lg">
-                  ↓
-                </div>
-              </div>
-
-              <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-3 focus-within:border-[var(--chad-green)] transition-colors">
-                <div className="text-xs text-zinc-500 font-bold mb-1 uppercase">
-                  You receive
-                </div>
-                <div className="flex items-center justify-between">
-                  <input
-                    type="number"
-                    placeholder="0.0"
-                    className="bg-transparent text-2xl w-full outline-none font-mono text-white placeholder:text-zinc-700"
-                  />
-                  <div className="flex items-center gap-2 bg-zinc-800 px-3 py-1.5 rounded-lg border border-zinc-700 shrink-0">
-                    {selectedToken?.logoURI ? (
-                      <img
-                        src={selectedToken.logoURI}
-                        alt="Token"
-                        className="w-5 h-5 rounded-full"
-                      />
-                    ) : (
-                      <div className="w-5 h-5 rounded-full bg-[var(--chad-green)]" />
-                    )}
-                    <span className="font-bold text-sm text-white">
-                      {selectedToken?.symbol || "..."}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                className={`w-full font-black py-4 rounded-xl text-lg transition-colors shadow-lg mt-4 ${
-                  swapTab === "buy"
-                    ? "bg-[var(--chad-green)] text-black hover:bg-[#2ae00e] shadow-[var(--chad-green)]/20"
-                    : "bg-red-500 text-white hover:bg-red-400 shadow-red-500/20"
-                }`}
-              >
-                {swapTab === "buy" ? "Quick Buy" : "Quick Sell"}
-              </button>
-            </div>
-          </div>
+          <SwapPanel
+            tokenAddress={tokenAddress}
+            selectedToken={selectedToken}
+          />
         </div>
 
         {/* Bottom Half: User Position (Portfolio) */}

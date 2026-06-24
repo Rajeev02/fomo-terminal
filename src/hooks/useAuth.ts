@@ -23,6 +23,7 @@ export function useAuth() {
     user,
     userName,
     walletAddress: activeWallet?.address,
+    wallet: activeWallet,
     login,
     logout,
     createWallet,

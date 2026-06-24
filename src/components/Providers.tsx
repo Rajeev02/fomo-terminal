@@ -2,7 +2,6 @@
 
 import { PrivyProvider } from "@privy-io/react-auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,20 +13,9 @@ const queryClient = new QueryClient({
 });
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
-
   // If the user hasn't provided an App ID, we use a placeholder that bypasses build checks
   const appId =
     process.env.NEXT_PUBLIC_PRIVY_APP_ID || "cltxxxmockappid1234567890";
-
-  if (!mounted) {
-    return <>{children}</>;
-  }
 
   return (
     <PrivyProvider

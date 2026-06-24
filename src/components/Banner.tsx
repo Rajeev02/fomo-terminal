@@ -9,6 +9,7 @@ export type Token = {
   price: number;
   change24h: number;
   logoURI?: string;
+  decimals?: number;
 };
 
 // Mock data to start with
