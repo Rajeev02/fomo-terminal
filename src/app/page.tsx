@@ -160,34 +160,33 @@ export default function Home() {
               <FeatureCard
                 label="PORTFOLIO"
                 title="track your wealth in real-time"
-                imageUrl="/images/fomo/leaderboard.webp"
+                imageUrl="/images/chadwallet/promo1.jpg"
               />
               <FeatureCard
                 label="DEFI YIELD"
                 title="stake and earn while you sleep"
-                imageUrl="/images/fomo/social-static.webp"
+                imageUrl="/images/chadwallet/promo2.jpg"
               />
               <FeatureCard
                 label="MEMECOIN SNIPER"
                 title="never miss a 100x gem again"
-                imageUrl="/images/fomo/alerts-static.webp"
+                imageUrl="/images/chadwallet/promo3.jpg"
               />
             </div>
             <div className="flex flex-col md:flex-row gap-6 items-stretch">
               <FeatureCard
                 label="EASY ONBOARDING"
                 title="create a wallet in an instant"
-                imageUrl="/images/fomo/sign-in-static.webp"
+                imageUrl="/images/chadwallet/app-store-promo.jpg"
               />
               <FeatureCard
                 label="ZERO GAS"
                 title="sponsored transactions built in"
-                imageUrl="/images/fomo/assets-static.webp"
+                imageUrl="/images/chadwallet/app-icon.png"
               />
               <FeatureCard
                 label="ONE CLICK"
                 title="fund easily with apple pay"
-                imageUrl="/images/fomo/apple-pay-static.webp"
               />
             </div>
           </div>
