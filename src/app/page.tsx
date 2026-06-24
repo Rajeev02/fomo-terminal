@@ -277,8 +277,66 @@ export default function Home() {
               </div>
 
               {/* Spinning background rings */}
-              <div className="absolute inset-0 m-auto z-1 w-[80vw] h-[80vw] md:w-[30vw] md:h-[30vw] rounded-full border border-dashed border-white/20 animate-[spin_30s_linear_infinite_reverse]" />
-              <div className="absolute inset-0 m-auto z-1 w-[150vw] h-[150vw] md:w-[55vw] md:h-[55vw] rounded-full border border-dashed border-white/10 animate-[spin_45s_linear_infinite]" />
+              <div className="absolute inset-0 m-auto z-1 w-[80vw] h-[80vw] md:w-[30vw] md:h-[30vw] rounded-full border border-dashed border-white/20 animate-[spin_30s_linear_infinite_reverse]">
+                {/* Inner Ring Avatars */}
+                <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-0">
+                  <div className="w-10 h-10 -translate-y-1/2 translate-x-1/2 bg-zinc-900 rounded-full border border-zinc-700 overflow-hidden flex items-center justify-center animate-[spin_30s_linear_infinite]">
+                    <img
+                      src="/images/logo.png"
+                      className="w-3/4 h-3/4 object-contain"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[120deg]">
+                  <div className="w-12 h-12 -translate-y-1/2 translate-x-1/2 bg-zinc-900 rounded-full border border-zinc-700 overflow-hidden animate-[spin_30s_linear_infinite]">
+                    <img
+                      src="/images/chadwallet/app-icon.png"
+                      className="w-full h-full object-cover"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[240deg]">
+                  <div className="w-8 h-8 -translate-y-1/2 translate-x-1/2 bg-zinc-900 rounded-full border border-[var(--chad-green)] overflow-hidden flex items-center justify-center animate-[spin_30s_linear_infinite]">
+                    <img
+                      src="/images/logo.png"
+                      className="w-3/4 h-3/4 object-contain"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="absolute inset-0 m-auto z-1 w-[150vw] h-[150vw] md:w-[55vw] md:h-[55vw] rounded-full border border-dashed border-white/10 animate-[spin_45s_linear_infinite]">
+                {/* Outer Ring Avatars */}
+                <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-45">
+                  <div className="w-14 h-14 -translate-y-1/2 translate-x-1/2 bg-zinc-900 rounded-full border border-zinc-700 overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
+                    <img
+                      src="/images/chadwallet/app-icon.png"
+                      className="w-full h-full object-cover"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[160deg]">
+                  <div className="w-12 h-12 -translate-y-1/2 translate-x-1/2 bg-zinc-900 rounded-full border border-zinc-700 overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
+                    <img
+                      src="/images/chadwallet/promo1.jpg"
+                      className="w-full h-full object-cover"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[280deg]">
+                  <div className="w-16 h-16 -translate-y-1/2 translate-x-1/2 bg-zinc-900 rounded-full border border-[var(--chad-purple)] overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
+                    <img
+                      src="/images/chadwallet/app-store-promo.jpg"
+                      className="w-full h-full object-cover"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
