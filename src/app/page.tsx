@@ -126,9 +126,11 @@ export default function Home() {
                   height={200}
                   className="opacity-10 absolute mix-blend-overlay w-[400px] h-[400px]"
                 />
-                <span className="font-mono text-zinc-600 z-10 text-2xl font-black">
-                  [CHADWALLET DESKTOP BETA]
-                </span>
+                <iframe
+                  src="https://www.chadwallet.xyz/"
+                  className="absolute inset-0 w-full h-full border-none z-10 rounded-b-2xl opacity-90"
+                  title="ChadWallet Desktop"
+                />
               </div>
             </div>
             <div className="w-[260px] h-[520px] bg-black rounded-[3rem] border-[8px] border-zinc-800 shadow-2xl absolute -right-4 bottom-[-100px] animate-float-desktop z-20 overflow-hidden flex items-center justify-center relative">
