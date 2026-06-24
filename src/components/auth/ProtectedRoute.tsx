@@ -8,17 +8,21 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isReady, isAuthenticated, login } = useAuth();
   const router = useRouter();
 
+  const isMockAppId = !process.env.NEXT_PUBLIC_PRIVY_APP_ID;
+
   useEffect(() => {
+    if (isMockAppId) return;
+
     // Once Privy is ready, if the user isn't authenticated, force login or redirect
     if (isReady && !isAuthenticated) {
       // Typically, apps might redirect to '/' or automatically open the login modal
       router.push("/");
       login();
     }
-  }, [isReady, isAuthenticated, router, login]);
+  }, [isReady, isAuthenticated, router, login, isMockAppId]);
 
   // Show a full-screen loading state while checking session
-  if (!isReady || !isAuthenticated) {
+  if (!isMockAppId && (!isReady || !isAuthenticated)) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-bg-primary">
         <div className="flex flex-col items-center gap-4">
