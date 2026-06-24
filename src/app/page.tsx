@@ -127,7 +127,7 @@ export default function Home() {
                   className="opacity-10 absolute mix-blend-overlay w-[400px] h-[400px]"
                 />
                 <iframe
-                  src="https://www.chadwallet.xyz/"
+                  src="/trade"
                   className="absolute inset-0 w-full h-full border-none z-10 rounded-b-2xl opacity-90"
                   title="ChadWallet Desktop"
                 />
