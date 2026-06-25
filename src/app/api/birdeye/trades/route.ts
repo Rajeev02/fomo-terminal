@@ -45,6 +45,18 @@ export async function GET(request: NextRequest) {
     }
 
     const json = await response.json();
+    if (json.success && json.data?.items) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      json.data.items = json.data.items.map((item: any) => ({
+        txHash: item.txHash,
+        side: item.side,
+        volumeUSD: Math.abs(
+          (item.quote?.uiAmount || 0) * (item.quote?.price || 0)
+        ),
+        tokens: Math.abs(item.base?.uiAmount || 0),
+        blockTime: (item.blockUnixTime || 0) * 1000,
+      }));
+    }
     return NextResponse.json(json);
   } catch (error) {
     console.error("Failed to fetch live trades:", error);

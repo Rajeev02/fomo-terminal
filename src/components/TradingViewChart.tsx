@@ -1,19 +1,25 @@
 "use client";
+import { useAppStore } from "@/store/useAppStore";
 
 interface TradingViewChartProps {
   tokenAddress: string;
 }
 
 export function TradingViewChart({ tokenAddress }: TradingViewChartProps) {
+  const theme = useAppStore((state) => state.theme);
+
   if (!tokenAddress) return null;
 
-  const birdeyeWidgetUrl = `https://birdeye.so/tv-widget/${tokenAddress}?chain=solana&viewMode=pair&theme=dark`;
+  const chartTheme = theme === "light" ? "light" : "dark";
+  const birdeyeWidgetUrl = `https://birdeye.so/tv-widget/${tokenAddress}?chain=solana&viewMode=pair&theme=${chartTheme}`;
 
   return (
-    <div className="w-full h-full bg-zinc-950 rounded-xl overflow-hidden border border-zinc-800 shadow-2xl relative">
+    <div className="w-full h-full bg-bg-secondary rounded-xl overflow-hidden border border-foreground/10 shadow-2xl relative">
       {/* Loading Skeleton underneath iframe */}
-      <div className="absolute inset-0 flex items-center justify-center -z-10 bg-zinc-900 animate-pulse">
-        <span className="text-zinc-600 font-bold">Loading Chart...</span>
+      <div className="absolute inset-0 flex items-center justify-center -z-10 bg-bg-tertiary animate-pulse">
+        <span className="text-muted-foreground font-bold font-mono">
+          Loading Chart...
+        </span>
       </div>
       <iframe
         key={tokenAddress}

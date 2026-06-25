@@ -3,6 +3,8 @@
 import { useAuth } from "@/hooks/useAuth";
 import { LogIn, LogOut, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { useRouter, usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 // Utility to truncate long wallet addresses
 function truncateAddress(address: string | undefined) {
@@ -13,6 +15,14 @@ function truncateAddress(address: string | undefined) {
 export function AuthButton() {
   const { isReady, isAuthenticated, login, logout, userName, walletAddress } =
     useAuth();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (isReady && isAuthenticated && pathname === "/") {
+      router.push("/trade");
+    }
+  }, [isReady, isAuthenticated, pathname, router]);
 
   if (!isReady) {
     return (

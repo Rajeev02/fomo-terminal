@@ -119,7 +119,7 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
             href={`https://solscan.io/tx/${txHash}`}
             target="_blank"
             rel="noreferrer"
-            className="text-xs underline text-zinc-400"
+            className="text-xs underline text-foreground/50"
           >
             View on Solscan
           </a>
@@ -138,9 +138,9 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
   };
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-xl">
+    <div className="bg-bg-primary border border-foreground/10 rounded-2xl p-4 shadow-xl">
       {/* Buy/Sell Tabs */}
-      <div className="flex bg-zinc-950 rounded-xl p-1 mb-6 border border-zinc-800">
+      <div className="flex bg-bg-secondary rounded-xl p-1 mb-6 border border-foreground/10">
         <button
           onClick={() => {
             setSwapTab("buy");
@@ -149,7 +149,7 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
           className={`flex-1 py-2 text-center rounded-lg font-bold text-sm transition-colors ${
             swapTab === "buy"
               ? "bg-[var(--chad-green)] text-black"
-              : "text-zinc-500 hover:text-white"
+              : "text-foreground/50 hover:text-foreground"
           }`}
         >
           BUY
@@ -162,7 +162,7 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
           className={`flex-1 py-2 text-center rounded-lg font-bold text-sm transition-colors ${
             swapTab === "sell"
               ? "bg-red-500 text-white"
-              : "text-zinc-500 hover:text-white"
+              : "text-foreground/50 hover:text-foreground"
           }`}
         >
           SELL
@@ -171,8 +171,8 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
 
       <div className="space-y-4">
         {/* Input Panel */}
-        <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-3 focus-within:border-[var(--chad-green)] transition-colors">
-          <div className="text-xs text-zinc-500 font-bold mb-1 uppercase">
+        <div className="bg-bg-secondary border border-foreground/10 rounded-xl p-3 focus-within:border-[var(--chad-green)] transition-colors">
+          <div className="text-xs text-foreground/50 font-bold mb-1 uppercase">
             You pay
           </div>
           <div className="flex items-center justify-between">
@@ -181,9 +181,9 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
               placeholder="0.0"
               value={inputAmount}
               onChange={(e) => setInputAmount(e.target.value)}
-              className="bg-transparent text-2xl w-full outline-none font-mono text-white placeholder:text-zinc-700"
+              className="bg-transparent text-2xl w-full outline-none font-mono text-foreground placeholder:text-foreground/30"
             />
-            <div className="flex items-center gap-2 bg-zinc-800 px-3 py-1.5 rounded-lg border border-zinc-700 shrink-0">
+            <div className="flex items-center gap-2 bg-bg-tertiary px-3 py-1.5 rounded-lg border border-foreground/10 shrink-0">
               {swapTab === "buy" ? (
                 <>
                   <Image
@@ -193,7 +193,7 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
                     alt="SOL"
                     className="w-5 h-5 rounded-full"
                   />
-                  <span className="font-bold text-sm text-white">SOL</span>
+                  <span className="font-bold text-sm text-foreground">SOL</span>
                 </>
               ) : (
                 <>
@@ -208,7 +208,7 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
                   ) : (
                     <div className="w-5 h-5 rounded-full bg-[var(--chad-green)]" />
                   )}
-                  <span className="font-bold text-sm text-white">
+                  <span className="font-bold text-sm text-foreground">
                     {selectedToken?.symbol || "..."}
                   </span>
                 </>
@@ -218,9 +218,9 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
         </div>
 
         <div className="flex justify-center -my-3 relative z-10">
-          <div className="bg-zinc-800 p-2 rounded-xl border border-zinc-700 text-white shadow-lg">
+          <div className="bg-bg-secondary p-2 rounded-xl border border-foreground/10 text-foreground shadow-lg">
             {isQuoteLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin text-zinc-400" />
+              <Loader2 className="w-4 h-4 animate-spin text-foreground/50" />
             ) : (
               "↓"
             )}
@@ -228,8 +228,8 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
         </div>
 
         {/* Output Panel */}
-        <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-3 focus-within:border-[var(--chad-green)] transition-colors">
-          <div className="text-xs text-zinc-500 font-bold mb-1 uppercase">
+        <div className="bg-bg-secondary border border-foreground/10 rounded-xl p-3 focus-within:border-[var(--chad-green)] transition-colors">
+          <div className="text-xs text-foreground/50 font-bold mb-1 uppercase">
             You receive
           </div>
           <div className="flex items-center justify-between">
@@ -238,9 +238,9 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
               placeholder="0.0"
               value={outputAmountUI}
               readOnly
-              className="bg-transparent text-2xl w-full outline-none font-mono text-white placeholder:text-zinc-700 cursor-not-allowed"
+              className="bg-transparent text-2xl w-full outline-none font-mono text-foreground placeholder:text-foreground/30 cursor-not-allowed"
             />
-            <div className="flex items-center gap-2 bg-zinc-800 px-3 py-1.5 rounded-lg border border-zinc-700 shrink-0">
+            <div className="flex items-center gap-2 bg-bg-tertiary px-3 py-1.5 rounded-lg border border-foreground/10 shrink-0">
               {swapTab === "sell" ? (
                 <>
                   <Image
@@ -250,7 +250,7 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
                     alt="SOL"
                     className="w-5 h-5 rounded-full"
                   />
-                  <span className="font-bold text-sm text-white">SOL</span>
+                  <span className="font-bold text-sm text-foreground">SOL</span>
                 </>
               ) : (
                 <>
@@ -265,7 +265,7 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
                   ) : (
                     <div className="w-5 h-5 rounded-full bg-[var(--chad-green)]" />
                   )}
-                  <span className="font-bold text-sm text-white">
+                  <span className="font-bold text-sm text-foreground">
                     {selectedToken?.symbol || "..."}
                   </span>
                 </>
@@ -276,7 +276,7 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
 
         {/* Price Impact & Details */}
         {quote && (
-          <div className="px-2 py-1 flex items-center justify-between text-xs text-zinc-500 font-mono">
+          <div className="px-2 py-1 flex items-center justify-between text-xs text-foreground/50 font-mono">
             <span>Price Impact: {quote.priceImpactPct}%</span>
             <span>
               Fee:{" "}
@@ -299,9 +299,9 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
           disabled={!quote || isSwapping || isQuoteLoading || !walletAddress}
           className={`w-full font-black py-4 rounded-xl text-lg transition-colors shadow-lg mt-4 flex items-center justify-center gap-2 ${
             !walletAddress
-              ? "bg-zinc-800 text-zinc-500 cursor-not-allowed"
+              ? "bg-zinc-100 dark:bg-zinc-800 text-foreground/50 dark:text-foreground/50 cursor-not-allowed"
               : !quote || isQuoteLoading
-                ? "bg-zinc-800 text-zinc-500 cursor-not-allowed"
+                ? "bg-zinc-100 dark:bg-zinc-800 text-foreground/50 dark:text-foreground/50 cursor-not-allowed"
                 : swapTab === "buy"
                   ? "bg-[var(--chad-green)] text-black hover:bg-[#2ae00e] shadow-[var(--chad-green)]/20"
                   : "bg-red-500 text-white hover:bg-red-400 shadow-red-500/20"

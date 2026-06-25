@@ -26,8 +26,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
           accentColor: "#39FF14",
           logo: "/images/logo.png", // Replace with ChadWallet logo
         },
-        // Setup Google and Apple Auth
-        loginMethods: ["google", "apple"],
+        // Setup Google Auth (Apple disabled per request)
+        loginMethods: ["google"],
         // Automatically create a Solana wallet upon login
         embeddedWallets: {
           solana: {

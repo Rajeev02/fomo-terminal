@@ -1,10 +1,23 @@
+"use client";
+
 import Link from "next/link";
-import { Apple, Smartphone } from "lucide-react";
+import { Apple, Smartphone, Moon, Sun, Zap } from "lucide-react";
 import { AuthButton } from "./auth/AuthButton";
+import { useAppStore } from "@/store/useAppStore";
+import { useAuth } from "@/hooks/useAuth";
 
 export function Header() {
+  const { theme, setTheme } = useAppStore();
+  const { isAuthenticated } = useAuth();
+
+  const cycleTheme = () => {
+    if (theme === "chad") setTheme("dark");
+    else if (theme === "dark") setTheme("light");
+    else setTheme("chad");
+  };
+
   return (
-    <header className="items-center h-13 pt-4 pb-2 px-6 justify-between hidden md:flex sticky top-0 z-50 bg-bg-primary/80 backdrop-blur-lg border-b border-white/5">
+    <header className="items-center h-13 pt-4 pb-2 px-6 justify-between hidden md:flex sticky top-0 z-50 bg-bg-primary/80 backdrop-blur-lg border-b border-foreground/5">
       <Link
         href="/"
         className="flex items-center text-foreground font-black text-2xl tracking-tighter hover:opacity-80 transition-opacity"
@@ -12,25 +25,48 @@ export function Header() {
         <img
           src="/images/logo.png"
           alt="ChadWallet Logo"
-          className="w-8 h-8 mr-2"
+          className={`w-8 h-8 mr-2 ${theme === "light" ? "invert" : ""}`}
         />
         CHAD<span className="text-[var(--chad-green)]">WALLET</span>
       </Link>
       <div className="flex gap-3">
-        <Link
-          href="https://apps.apple.com/us/app/chadwallet/id6757367474"
-          target="_blank"
-          className="bg-white/5 backdrop-blur-md rounded-md hover:ring-white/20 hover:ring-1 hover:bg-white/10 transition-all flex items-center justify-center px-4 py-2 border border-white/10 text-sm font-semibold"
+        {!isAuthenticated && (
+          <>
+            <Link
+              href="https://apps.apple.com/us/app/chadwallet/id6757367474"
+              target="_blank"
+              className="hover:opacity-80 transition-opacity hidden sm:block"
+            >
+              <img
+                src="/images/app-store.png"
+                alt="Download on the App Store"
+                className="h-[40px] w-auto rounded-lg"
+              />
+            </Link>
+            <Link
+              href="https://play.google.com/store/apps/details?id=xyz.chadwallet.www"
+              target="_blank"
+              className="hover:opacity-80 transition-opacity hidden sm:block"
+            >
+              <img
+                src="/images/google-play.png"
+                alt="Get it on Google Play"
+                className="h-[40px] w-auto rounded-lg"
+              />
+            </Link>
+          </>
+        )}
+        <button
+          onClick={cycleTheme}
+          className="bg-bg-secondary backdrop-blur-md rounded-md hover:ring-foreground/20 hover:ring-1 hover:bg-bg-tertiary transition-all flex items-center justify-center p-2 border border-foreground/10 text-foreground/50 hover:text-foreground"
+          title={`Current Theme: ${theme}`}
         >
-          <Apple size={18} className="mr-2" /> iOS
-        </Link>
-        <Link
-          href="https://play.google.com/store/apps/details?id=xyz.chadwallet.www"
-          target="_blank"
-          className="bg-white/5 backdrop-blur-md hover:ring-white/20 hover:ring-1 hover:bg-white/10 transition-all rounded-md flex items-center justify-center px-4 py-2 border border-white/10 text-sm font-semibold"
-        >
-          <Smartphone size={18} className="mr-2" /> Android
-        </Link>
+          {theme === "dark" && <Moon size={18} />}
+          {theme === "light" && <Sun size={18} />}
+          {theme === "chad" && (
+            <Zap size={18} className="text-[var(--chad-green)]" />
+          )}
+        </button>
         <AuthButton />
       </div>
     </header>

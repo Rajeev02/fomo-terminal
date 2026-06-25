@@ -13,6 +13,27 @@ export type Token = {
   decimals?: number;
 };
 
+function TokenIcon({ token }: { token: Token }) {
+  const [error, setError] = useState(false);
+
+  if (!token.logoURI || error) {
+    return (
+      <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[var(--chad-green)] to-[var(--chad-purple)] shrink-0" />
+    );
+  }
+
+  return (
+    <Image
+      width={24}
+      height={24}
+      src={token.logoURI}
+      alt={token.symbol}
+      className="w-6 h-6 rounded-full object-cover shrink-0 bg-bg-tertiary"
+      onError={() => setError(true)}
+    />
+  );
+}
+
 // Mock data to start with
 const mockTokens: Token[] = [
   {
@@ -73,9 +94,9 @@ export function Banner({ reverse = false }: { reverse?: boolean }) {
   const displayTokens = [...tokens, ...tokens, ...tokens];
 
   return (
-    <div className="w-full overflow-hidden bg-zinc-900 border-y border-zinc-800 py-3 relative flex items-center">
+    <div className="w-full overflow-hidden bg-white dark:bg-zinc-950 border-y border-zinc-200 dark:border-zinc-800 py-3 relative flex items-center shadow-inner">
       <div
-        className={`flex w-max space-x-8 animate-[marquee_60s_linear_infinite] ${reverse ? "[animation-direction:reverse]" : ""} hover:[animation-play-state:paused]`}
+        className={`flex w-max space-x-8 animate-[marquee_120s_linear_infinite] ${reverse ? "[animation-direction:reverse]" : ""} hover:[animation-play-state:paused]`}
       >
         {isLoading
           ? // Skeleton loader
@@ -84,32 +105,22 @@ export function Banner({ reverse = false }: { reverse?: boolean }) {
                 key={`skel-${idx}`}
                 className="flex items-center space-x-3 shrink-0 px-4 py-1"
               >
-                <div className="w-6 h-6 rounded-full bg-zinc-800 animate-pulse" />
-                <div className="w-16 h-4 bg-zinc-800 rounded animate-pulse" />
-                <div className="w-16 h-4 bg-zinc-800 rounded animate-pulse" />
+                <div className="w-6 h-6 rounded-full bg-zinc-200 dark:bg-zinc-800 animate-pulse" />
+                <div className="w-16 h-4 bg-zinc-200 dark:bg-zinc-800 rounded animate-pulse" />
+                <div className="w-16 h-4 bg-zinc-200 dark:bg-zinc-800 rounded animate-pulse" />
               </div>
             ))
           : displayTokens.map((token, idx) => (
               <Link
                 key={`${token.address}-${idx}`}
                 href={`/trade/${token.address}`}
-                className="flex items-center space-x-3 shrink-0 px-4 py-1 rounded-full hover:bg-zinc-800 transition-colors cursor-pointer group"
+                className="flex items-center space-x-3 shrink-0 px-4 py-1 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer group"
               >
-                {token.logoURI ? (
-                  <Image
-                    width={24}
-                    height={24}
-                    src={token.logoURI}
-                    alt={token.symbol}
-                    className="w-6 h-6 rounded-full object-cover"
-                  />
-                ) : (
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[var(--chad-green)] to-[var(--chad-purple)]" />
-                )}
-                <span className="font-bold text-white group-hover:text-[var(--chad-green)] transition-colors">
+                <TokenIcon token={token} />
+                <span className="font-bold text-zinc-900 dark:text-white group-hover:text-[var(--chad-green)] transition-colors">
                   {token.symbol}
                 </span>
-                <span className="text-zinc-400 font-mono">
+                <span className="text-zinc-500 dark:text-zinc-400 font-mono">
                   $
                   {token.price.toLocaleString(undefined, {
                     minimumFractionDigits: 2,

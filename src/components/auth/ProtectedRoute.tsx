@@ -13,13 +13,11 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (isMockAppId) return;
 
-    // Once Privy is ready, if the user isn't authenticated, force login or redirect
+    // Once Privy is ready, if the user isn't authenticated, redirect to the home page
     if (isReady && !isAuthenticated) {
-      // Typically, apps might redirect to '/' or automatically open the login modal
       router.push("/");
-      login();
     }
-  }, [isReady, isAuthenticated, router, login, isMockAppId]);
+  }, [isReady, isAuthenticated, router, isMockAppId]);
 
   // Show a full-screen loading state while checking session
   if (!isMockAppId && (!isReady || !isAuthenticated)) {

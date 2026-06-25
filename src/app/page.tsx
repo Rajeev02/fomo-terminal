@@ -14,18 +14,26 @@ export default function Home() {
         {/* Top Banner */}
         <Banner />
 
-        {/* Hero Background Placeholder */}
-        <div className="absolute top-0 left-0 w-full h-[800px] -z-10 pointer-events-none select-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[var(--chad-green)]/15 via-bg-primary to-bg-primary" />
+        {/* Hero Deep Space Background */}
+        <div className="absolute top-0 left-0 w-full h-[1400px] -z-10 pointer-events-none select-none bg-[var(--hero-bg)] overflow-hidden">
+          {/* Deep space glow */}
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[var(--hero-glow-start)] via-[var(--hero-glow-via)] to-[var(--hero-glow-to)]" />
+          {/* Earth reflection curve */}
+          <div className="absolute top-[-600px] left-1/2 -translate-x-1/2 w-[1800px] h-[800px] bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-[var(--hero-earth)] to-transparent rounded-[100%] blur-3xl opacity-80" />
+          {/* Starry dust particles (CSS simulated via box shadow dots if needed, keeping it clean with just the glow for now) */}
+        </div>
 
         {/* Hero Content */}
-        <div className="flex flex-col items-center gap-5 md:gap-8 mt-20 md:mt-32">
+        <div className="flex flex-col items-center gap-5 md:gap-8 mt-20 md:mt-32 z-10">
           <div className="flex flex-col gap-2 items-center text-center px-6">
-            <h1 className="text-[36px] leading-[40px] md:text-[64px] md:leading-[68px] text-foreground text-center tracking-tighter font-black max-w-4xl">
-              where chads manage wealth.
+            <h1 className="text-[70px] leading-[70px] md:text-[130px] md:leading-[120px] text-foreground text-center tracking-tighter font-black max-w-5xl">
+              chadwallet
             </h1>
-            <p className="md:text-[22px] text-zinc-400 text-center md:leading-8 tracking-tight max-w-2xl mt-4">
-              From memecoins to yield farming, the most premium wallet on
-              Solana. Built for the culture.
+            <p className="text-[24px] md:text-[36px] text-foreground font-bold tracking-tight text-center mt-2">
+              where traders become legends.
+            </p>
+            <p className="md:text-[22px] text-muted-foreground text-center tracking-tight max-w-2xl mt-4">
+              From memecoins to viral tokens, trade any crypto in seconds.
             </p>
           </div>
 
@@ -59,7 +67,7 @@ export default function Home() {
           </div>
 
           <div className="hidden md:flex gap-4 mt-8">
-            <button className="group relative items-center justify-center overflow-hidden bg-[var(--chad-green)]/20 hover:bg-[var(--chad-green)]/40 text-[var(--chad-green)] backdrop-blur-md transition-colors duration-150 py-4 px-8 rounded-xl text-lg font-bold border border-[var(--chad-green)]/30 z-10 flex">
+            <button className="group relative items-center justify-center overflow-hidden bg-[#2563EB] hover:bg-[#1D4ED8] text-white backdrop-blur-md transition-colors duration-150 py-4 px-10 rounded-full text-lg font-bold border border-white/10 z-10 flex">
               <span>Launch Web App</span>
               <div className="flex items-center overflow-hidden w-0 opacity-0 group-hover:w-7 group-hover:opacity-100 transition-all duration-150 ease-out">
                 <ArrowRight className="size-5 ml-2 shrink-0" />
@@ -102,62 +110,69 @@ export default function Home() {
         />
 
         {/* Cross Platform Section */}
-        <div className="hidden md:flex flex-col items-center pt-32 pb-24 px-8 gap-3 w-full">
-          <div className="font-mono font-bold text-[var(--chad-purple)] tracking-widest text-sm">
-            NOW ON DESKTOP & MOBILE
+        <div className="hidden md:flex flex-col items-center pt-32 pb-24 px-8 gap-3 w-full relative z-10">
+          <div className="font-mono font-bold text-[#3B82F6] tracking-widest text-sm">
+            NOW AVAILABLE ON DESKTOP
           </div>
-          <h2 className="text-[56px] leading-[60px] tracking-tighter text-center font-black mt-2">
+          <h2 className="text-[40px] leading-[44px] md:text-[56px] md:leading-[60px] tracking-tighter text-center font-black mt-2 text-foreground">
             trade from anywhere.
             <br />
             never lose a beat.
           </h2>
-          <p className="text-zinc-400 text-[22px] tracking-tight mt-4">
-            Snipe on your phone, manage portfolio on your desktop.
+          <p className="text-muted-foreground text-[22px] tracking-tight mt-4 text-center">
+            Open a trade on your phone, close it on your desktop.
+            <br />
+            All in one app.
           </p>
 
-          <div className="relative mt-16 w-full max-w-5xl flex justify-center h-[400px]">
-            <div className="w-[800px] h-[450px] bg-bg-secondary rounded-t-2xl border-t border-l border-r border-white/10 shadow-2xl overflow-hidden relative">
-              <div className="absolute top-0 w-full h-8 bg-black/40 flex items-center px-4 gap-2 border-b border-white/5">
-                <div className="w-3 h-3 rounded-full bg-red-500/50" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
-                <div className="w-3 h-3 rounded-full bg-green-500/50" />
+          <div className="relative mt-16 w-full max-w-5xl flex justify-center pb-32">
+            {/* Desktop Frame (iMac Style) */}
+            <div className="relative flex flex-col items-center z-10 w-full max-w-[900px] mx-4 md:mx-0">
+              {/* Monitor Bezel */}
+              <div className="w-full aspect-[16/10] bg-[#111] rounded-2xl md:rounded-3xl border border-[#27272A] shadow-[0_40px_80px_-20px_rgba(0,0,0,1)] relative flex flex-col overflow-hidden">
+                {/* Inner Screen */}
+                <div className="flex-1 w-full bg-black relative">
+                  <Image
+                    src="/images/hero-desktop.png"
+                    alt="ChadWallet Desktop UI"
+                    fill
+                    className="object-cover scale-[1.35] origin-center"
+                    priority
+                  />
+                </div>
               </div>
-              <div className="mt-8 p-8 h-full bg-gradient-to-b from-bg-tertiary to-bg-primary flex items-center justify-center overflow-hidden relative">
-                <Image
-                  src="/images/logo.png"
-                  alt="ChadWallet Logo"
-                  width={200}
-                  height={200}
-                  className="opacity-10 absolute mix-blend-overlay w-[400px] h-[400px]"
-                />
-                <iframe
-                  src="/trade"
-                  className="absolute inset-0 w-full h-full border-none z-10 rounded-b-2xl opacity-90"
-                  title="ChadWallet Desktop"
-                />
-              </div>
+              {/* iMac Stand */}
+              <div className="w-32 h-12 md:w-48 md:h-16 bg-gradient-to-b from-[#222] to-[#111] border-b-[4px] border-[#333] shadow-[0_10px_20px_rgba(0,0,0,0.5)] transform perspective-[100px] rotateX-[10deg] -mt-2 z-0 rounded-b-lg"></div>
             </div>
-            <div className="w-[260px] h-[520px] bg-black rounded-[3rem] border-[8px] border-zinc-800 shadow-2xl absolute -right-4 bottom-[-100px] animate-float-desktop z-20 overflow-hidden flex items-center justify-center relative">
-              <video
-                src="/images/chadwallet.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem]"
-              />
+
+            {/* Mobile Frame (iPhone Style Overlapping) */}
+            <div className="w-[180px] h-[380px] md:w-[260px] md:h-[540px] bg-black rounded-[2.5rem] md:rounded-[3.5rem] border-[6px] md:border-[10px] border-[#222] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9)] absolute right-0 md:-right-8 bottom-12 md:bottom-0 rotate-[12deg] z-20 overflow-hidden flex flex-col animate-float-desktop ring-1 ring-white/10">
+              {/* Dynamic Island Notch */}
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[35%] h-[20px] md:h-[25px] bg-black rounded-full z-30 shadow-sm"></div>
+
+              {/* Video Content */}
+              <div className="flex-1 w-full h-full relative overflow-hidden bg-black rounded-[2rem] md:rounded-[2.8rem]">
+                <video
+                  src="/images/chadwallet.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
 
         {/* Features Grid Section */}
-        <div className="pt-24 md:py-32 px-4 md:px-20 flex flex-col self-stretch md:self-center gap-12 w-full max-w-[1400px] z-10">
-          <div className="hidden md:flex flex-col gap-3 text-center md:text-left mb-8">
-            <h2 className="text-[40px] md:text-[56px] tracking-tighter leading-tight font-black">
-              built for the culture
+        <div className="pt-24 md:py-32 px-4 md:px-20 flex flex-col self-stretch md:self-center gap-12 w-full max-w-[1400px] z-10 relative">
+          <div className="hidden md:flex flex-col gap-1 text-left mb-4">
+            <h2 className="text-[40px] md:text-[56px] tracking-tighter leading-tight font-black text-foreground">
+              never miss out again
             </h2>
-            <p className="text-zinc-400 leading-6 text-[22px] md:text-[28px]">
-              the only wallet you&apos;ll ever need
+            <p className="text-muted-foreground leading-6 text-[22px] md:text-[24px]">
+              the only social-first trading app
             </p>
           </div>
 
@@ -211,7 +226,7 @@ export default function Home() {
                   <br />
                   for the rest of us
                 </h2>
-                <p className="md:text-[24px] text-zinc-400 tracking-tight text-center mt-4">
+                <p className="md:text-[24px] text-muted-foreground tracking-tight text-center mt-4">
                   join 100,000+ chads securing their bags
                 </p>
                 <div className="pt-10 w-full flex justify-center">
@@ -281,10 +296,10 @@ export default function Home() {
               </div>
 
               {/* Spinning background rings */}
-              <div className="absolute inset-0 m-auto z-1 w-[80vw] h-[80vw] md:w-[30vw] md:h-[30vw] rounded-full border border-dashed border-white/20 animate-[spin_30s_linear_infinite_reverse]">
+              <div className="absolute inset-0 m-auto z-1 w-[80vw] h-[80vw] md:w-[30vw] md:h-[30vw] rounded-full border border-dashed border-foreground/20 animate-[spin_30s_linear_infinite_reverse]">
                 {/* Inner Ring Avatars */}
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-0">
-                  <div className="w-10 h-10 -translate-y-1/2 translate-x-1/2 bg-zinc-900 rounded-full border border-zinc-700 overflow-hidden flex items-center justify-center animate-[spin_30s_linear_infinite]">
+                  <div className="w-10 h-10 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden flex items-center justify-center animate-[spin_30s_linear_infinite]">
                     <Image
                       width={24}
                       height={24}
@@ -295,7 +310,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[120deg]">
-                  <div className="w-12 h-12 -translate-y-1/2 translate-x-1/2 bg-zinc-900 rounded-full border border-zinc-700 overflow-hidden animate-[spin_30s_linear_infinite]">
+                  <div className="w-12 h-12 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden animate-[spin_30s_linear_infinite]">
                     <Image
                       width={24}
                       height={24}
@@ -306,7 +321,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[240deg]">
-                  <div className="w-8 h-8 -translate-y-1/2 translate-x-1/2 bg-zinc-900 rounded-full border border-[var(--chad-green)] overflow-hidden flex items-center justify-center animate-[spin_30s_linear_infinite]">
+                  <div className="w-14 h-14 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden flex items-center justify-center animate-[spin_30s_linear_infinite]">
                     <Image
                       width={24}
                       height={24}
@@ -317,10 +332,10 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-0 m-auto z-1 w-[150vw] h-[150vw] md:w-[55vw] md:h-[55vw] rounded-full border border-dashed border-white/10 animate-[spin_45s_linear_infinite]">
+              <div className="absolute inset-0 m-auto z-1 w-[120vw] h-[120vw] md:w-[45vw] md:h-[45vw] rounded-full border border-dashed border-foreground/10 animate-[spin_45s_linear_infinite]">
                 {/* Outer Ring Avatars */}
-                <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-45">
-                  <div className="w-14 h-14 -translate-y-1/2 translate-x-1/2 bg-zinc-900 rounded-full border border-zinc-700 overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
+                <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[45deg]">
+                  <div className="w-16 h-16 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
                     <Image
                       width={24}
                       height={24}
