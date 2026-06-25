@@ -1,6 +1,5 @@
 "use client";
-import Image from "next/image";
-
+import { Logo } from "@/components/Logo";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuote, useSwapTransaction } from "@/hooks/useJupiter";
@@ -186,21 +185,13 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
             <div className="flex items-center gap-2 bg-bg-tertiary px-3 py-1.5 rounded-lg border border-foreground/10 shrink-0">
               {swapTab === "buy" ? (
                 <>
-                  <Image
-                    width={24}
-                    height={24}
-                    src="/images/logo.png"
-                    alt="SOL"
-                    className="w-5 h-5 rounded-full"
-                  />
+                  <Logo className="w-5 h-5" />
                   <span className="font-bold text-sm text-foreground">SOL</span>
                 </>
               ) : (
                 <>
                   {selectedToken?.logoURI ? (
-                    <Image
-                      width={24}
-                      height={24}
+                    <img
                       src={selectedToken.logoURI}
                       alt="Token"
                       className="w-5 h-5 rounded-full"
@@ -243,21 +234,13 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
             <div className="flex items-center gap-2 bg-bg-tertiary px-3 py-1.5 rounded-lg border border-foreground/10 shrink-0">
               {swapTab === "sell" ? (
                 <>
-                  <Image
-                    width={24}
-                    height={24}
-                    src="/images/logo.png"
-                    alt="SOL"
-                    className="w-5 h-5 rounded-full"
-                  />
+                  <Logo className="w-5 h-5" />
                   <span className="font-bold text-sm text-foreground">SOL</span>
                 </>
               ) : (
                 <>
                   {selectedToken?.logoURI ? (
-                    <Image
-                      width={24}
-                      height={24}
+                    <img
                       src={selectedToken.logoURI}
                       alt="Token"
                       className="w-5 h-5 rounded-full"

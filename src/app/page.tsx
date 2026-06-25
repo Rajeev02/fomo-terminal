@@ -5,6 +5,8 @@ import { Banner } from "@/components/Banner";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { Logo } from "@/components/Logo";
+
 export default function Home() {
   return (
     <div className="relative isolate flex flex-col min-h-screen bg-bg-primary overflow-x-hidden selection:bg-[var(--chad-green)] selection:text-black">
@@ -300,13 +302,7 @@ export default function Home() {
                 {/* Inner Ring Avatars */}
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-0">
                   <div className="w-10 h-10 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden flex items-center justify-center animate-[spin_30s_linear_infinite]">
-                    <Image
-                      width={24}
-                      height={24}
-                      src="/images/logo.png"
-                      className="w-3/4 h-3/4 object-contain"
-                      alt=""
-                    />
+                    <Logo className="w-3/4 h-3/4 object-contain" alt="" />
                   </div>
                 </div>
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[120deg]">
@@ -322,13 +318,7 @@ export default function Home() {
                 </div>
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[240deg]">
                   <div className="w-14 h-14 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden flex items-center justify-center animate-[spin_30s_linear_infinite]">
-                    <Image
-                      width={24}
-                      height={24}
-                      src="/images/logo.png"
-                      className="w-3/4 h-3/4 object-contain"
-                      alt=""
-                    />
+                    <Logo className="w-3/4 h-3/4 object-contain" alt="" />
                   </div>
                 </div>
               </div>

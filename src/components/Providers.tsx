@@ -4,6 +4,7 @@ import { PrivyProvider } from "@privy-io/react-auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useAppStore } from "@/store/useAppStore";
 import { useEffect, useState } from "react";
+import { useLogoSrc } from "./Logo";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,6 +29,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     process.env.NEXT_PUBLIC_PRIVY_APP_ID || "cltxxxmockappid1234567890";
 
   const privyTheme = mounted && theme === "light" ? "light" : "dark";
+  const logoSrc = useLogoSrc();
 
   return (
     <PrivyProvider
@@ -36,7 +38,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         appearance: {
           theme: privyTheme,
           accentColor: "#39FF14",
-          logo: "/images/logo.png", // Replace with ChadWallet logo
+          logo: logoSrc,
         },
         // Setup Google Auth (Apple disabled per request)
         loginMethods: ["google"],
