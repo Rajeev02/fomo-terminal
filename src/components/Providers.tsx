@@ -40,8 +40,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
           accentColor: "#39FF14",
           logo: logoSrc,
         },
-        // Setup Google Auth (Apple disabled per request)
-        loginMethods: ["google"],
+        // Setup Google & Apple Auth
+        loginMethods: ["google", "apple"],
         // Automatically create a Solana wallet upon login
         embeddedWallets: {
           solana: {
