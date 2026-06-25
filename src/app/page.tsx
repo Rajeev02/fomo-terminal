@@ -346,7 +346,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[160deg]">
-                  <div className="w-12 h-12 -translate-y-1/2 translate-x-1/2 bg-zinc-900 rounded-full border border-zinc-700 overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
+                  <div className="w-12 h-12 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-foreground/10 overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
                     <Image
                       width={24}
                       height={24}
@@ -357,7 +357,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[280deg]">
-                  <div className="w-16 h-16 -translate-y-1/2 translate-x-1/2 bg-zinc-900 rounded-full border border-[var(--chad-purple)] overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
+                  <div className="w-16 h-16 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-[var(--chad-purple)] overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
                     <Image
                       width={24}
                       height={24}

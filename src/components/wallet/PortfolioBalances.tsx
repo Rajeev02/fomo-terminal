@@ -80,7 +80,7 @@ export function PortfolioBalances() {
             {tokenBalances.map((token) => (
               <div
                 key={token.mint}
-                className="flex items-center justify-between p-3 rounded-lg bg-zinc-900 border border-foreground/10"
+                className="flex items-center justify-between p-3 rounded-lg bg-bg-secondary border border-foreground/10"
               >
                 <div className="flex flex-col">
                   <span className="font-mono text-xs text-foreground/50">

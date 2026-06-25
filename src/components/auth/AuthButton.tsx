@@ -27,7 +27,7 @@ export function AuthButton() {
   if (!isReady) {
     return (
       <Button variant="secondary" className="gap-2 opacity-50" disabled>
-        <span className="w-4 h-4 rounded-full border-2 border-zinc-500 border-t-transparent animate-spin" />
+        <span className="w-4 h-4 rounded-full border-2 border-foreground/50 border-t-transparent animate-spin" />
         Loading...
       </Button>
     );
@@ -45,7 +45,7 @@ export function AuthButton() {
               title="Authenticated"
             />
           </div>
-          <div className="flex items-center gap-1 text-xs text-zinc-500">
+          <div className="flex items-center gap-1 text-xs text-foreground/50">
             <Wallet size={12} />
             <span>{truncateAddress(walletAddress)}</span>
           </div>
@@ -55,7 +55,7 @@ export function AuthButton() {
         <Button
           variant="ghost"
           onClick={logout}
-          className="text-zinc-400 hover:text-red-400 hover:bg-red-400/10 gap-2"
+          className="text-foreground/50 hover:text-red-400 hover:bg-red-400/10 gap-2"
         >
           <LogOut size={16} />
           <span className="hidden md:inline">Logout</span>

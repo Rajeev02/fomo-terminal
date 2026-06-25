@@ -299,9 +299,9 @@ export function SwapPanel({ tokenAddress, selectedToken }: SwapPanelProps) {
           disabled={!quote || isSwapping || isQuoteLoading || !walletAddress}
           className={`w-full font-black py-4 rounded-xl text-lg transition-colors shadow-lg mt-4 flex items-center justify-center gap-2 ${
             !walletAddress
-              ? "bg-zinc-100 dark:bg-zinc-800 text-foreground/50 dark:text-foreground/50 cursor-not-allowed"
+              ? "bg-bg-tertiary text-foreground/50 cursor-not-allowed"
               : !quote || isQuoteLoading
-                ? "bg-zinc-100 dark:bg-zinc-800 text-foreground/50 dark:text-foreground/50 cursor-not-allowed"
+                ? "bg-bg-tertiary text-foreground/50 cursor-not-allowed"
                 : swapTab === "buy"
                   ? "bg-[var(--chad-green)] text-black hover:bg-[#2ae00e] shadow-[var(--chad-green)]/20"
                   : "bg-red-500 text-white hover:bg-red-400 shadow-red-500/20"

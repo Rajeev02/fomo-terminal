@@ -24,8 +24,8 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-bg-primary">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 rounded-full border-4 border-zinc-800 border-t-[var(--chad-green)] animate-spin" />
-          <div className="text-zinc-500 font-mono text-sm tracking-widest animate-pulse">
+          <div className="w-12 h-12 rounded-full border-4 border-foreground/10 border-t-[var(--chad-green)] animate-spin" />
+          <div className="text-foreground/50 font-mono text-sm tracking-widest animate-pulse">
             AUTHENTICATING...
           </div>
         </div>

@@ -22,6 +22,12 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
   const [activeStatsTab, setActiveStatsTab] = useState<"trades" | "holders">(
     "trades"
   );
+  const [topTab, setTopTab] = useState<"alerts" | "tokens" | "leaderboard">(
+    "tokens"
+  );
+  const [listTab, setListTab] = useState<"watchlist" | "crypto" | "trending">(
+    "trending"
+  );
   const { activeTab: layoutTab } = useAppStore();
 
   const { data: overview, isLoading: isOverviewLoading } =
@@ -58,28 +64,62 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
       <aside className="w-full lg:w-80 border-r border-foreground/10 flex flex-col bg-bg-primary">
         <div className="px-4 pt-4 pb-2 border-b border-foreground/10 flex flex-col gap-3">
           <div className="flex items-center gap-4 text-xs font-bold text-muted-foreground tracking-wide">
-            <span className="hover:text-foreground cursor-pointer">Alerts</span>
-            <span className="text-foreground border-b border-foreground pb-1">
+            <span
+              onClick={() => setTopTab("alerts")}
+              className={`cursor-pointer ${topTab === "alerts" ? "text-foreground border-b border-foreground pb-1" : "hover:text-foreground"}`}
+            >
+              Alerts
+            </span>
+            <span
+              onClick={() => setTopTab("tokens")}
+              className={`cursor-pointer ${topTab === "tokens" ? "text-foreground border-b border-foreground pb-1" : "hover:text-foreground"}`}
+            >
               Tokens
             </span>
-            <span className="hover:text-foreground cursor-pointer">
+            <span
+              onClick={() => setTopTab("leaderboard")}
+              className={`cursor-pointer ${topTab === "leaderboard" ? "text-foreground border-b border-foreground pb-1" : "hover:text-foreground"}`}
+            >
               Leaderboard
             </span>
           </div>
-          <div className="flex items-center gap-3 text-xs font-bold text-muted-foreground bg-bg-secondary rounded-lg p-1 w-full justify-between">
-            <span className="flex-1 text-center py-1 rounded-md hover:text-foreground cursor-pointer">
-              Watchlist
-            </span>
-            <span className="flex-1 text-center py-1 rounded-md hover:text-foreground cursor-pointer">
-              Crypto
-            </span>
-            <span className="flex-1 text-center py-1 rounded-md bg-foreground/10 text-foreground shadow-sm">
-              Trending
-            </span>
-          </div>
+          {topTab === "tokens" && (
+            <div className="flex items-center gap-3 text-xs font-bold text-muted-foreground bg-bg-secondary rounded-lg p-1 w-full justify-between">
+              <span
+                onClick={() => setListTab("watchlist")}
+                className={`flex-1 text-center py-1 rounded-md cursor-pointer transition-colors ${listTab === "watchlist" ? "bg-foreground/10 text-foreground shadow-sm" : "hover:text-foreground"}`}
+              >
+                Watchlist
+              </span>
+              <span
+                onClick={() => setListTab("crypto")}
+                className={`flex-1 text-center py-1 rounded-md cursor-pointer transition-colors ${listTab === "crypto" ? "bg-foreground/10 text-foreground shadow-sm" : "hover:text-foreground"}`}
+              >
+                Crypto
+              </span>
+              <span
+                onClick={() => setListTab("trending")}
+                className={`flex-1 text-center py-1 rounded-md cursor-pointer transition-colors ${listTab === "trending" ? "bg-foreground/10 text-foreground shadow-sm" : "hover:text-foreground"}`}
+              >
+                Trending
+              </span>
+            </div>
+          )}
         </div>
         <div className="flex-1 overflow-y-auto custom-scrollbar">
-          {isLoading ? (
+          {topTab !== "tokens" ? (
+            <div className="p-8 text-center text-muted-foreground text-sm">
+              {topTab === "alerts"
+                ? "Alerts coming soon."
+                : "Leaderboard coming soon."}
+            </div>
+          ) : listTab !== "trending" ? (
+            <div className="p-8 text-center text-muted-foreground text-sm">
+              {listTab === "watchlist"
+                ? "Your watchlist is empty."
+                : "Crypto list coming soon."}
+            </div>
+          ) : isLoading ? (
             <div className="p-8 text-center text-muted-foreground animate-pulse">
               Loading trends...
             </div>
@@ -286,7 +326,7 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
                     {Array.from({ length: 5 }).map((_, i) => (
                       <div
                         key={i}
-                        className="h-6 bg-zinc-800 rounded animate-pulse"
+                        className="h-6 bg-bg-tertiary rounded animate-pulse"
                       />
                     ))}
                   </div>
