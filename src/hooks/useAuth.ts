@@ -5,10 +5,11 @@ export function useAuth() {
     usePrivy();
   const { wallets } = useWallets();
 
-  // Privy supports embedded wallets, so we can find the Solana wallet attached to the user if any.
-  // The first wallet is typically the embedded one created on login.
+  // Find the Solana embedded wallet specifically, as we are a Solana app.
   const activeWallet =
-    wallets.find((w) => w.walletClientType === "privy") || wallets[0];
+    wallets.find(
+      (w) => w.walletClientType === "privy" && w.chainType === "solana"
+    ) || wallets.find((w) => w.chainType === "solana");
 
   // Format the user's name based on their login method (email or google name)
   const userName =
