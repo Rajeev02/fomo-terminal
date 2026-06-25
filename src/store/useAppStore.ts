@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 type Theme = "dark" | "light" | "chad";
 
@@ -13,15 +14,23 @@ interface AppState {
   setIsMockAppId: (isMock: boolean) => void;
 }
 
-export const useAppStore = create<AppState>((set) => ({
-  isTerminalActive: false,
-  activeTab: "portfolio",
-  theme: "chad",
-  isMockAppId: false,
+export const useAppStore = create<AppState>()(
+  persist(
+    (set) => ({
+      isTerminalActive: false,
+      activeTab: "portfolio",
+      theme: "chad",
+      isMockAppId: false,
 
-  toggleTerminal: () =>
-    set((state) => ({ isTerminalActive: !state.isTerminalActive })),
-  setActiveTab: (tab) => set({ activeTab: tab }),
-  setTheme: (theme) => set({ theme }),
-  setIsMockAppId: (isMock) => set({ isMockAppId: isMock }),
-}));
+      toggleTerminal: () =>
+        set((state) => ({ isTerminalActive: !state.isTerminalActive })),
+      setActiveTab: (tab) => set({ activeTab: tab }),
+      setTheme: (theme) => set({ theme }),
+      setIsMockAppId: (isMock) => set({ isMockAppId: isMock }),
+    }),
+    {
+      name: "chadwallet-storage",
+      partialize: (state) => ({ theme: state.theme }),
+    }
+  )
+);

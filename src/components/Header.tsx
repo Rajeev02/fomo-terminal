@@ -1,14 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { Apple, Smartphone, Moon, Sun, Zap } from "lucide-react";
+import { Moon, Sun, Zap } from "lucide-react";
 import { AuthButton } from "./auth/AuthButton";
 import { useAppStore } from "@/store/useAppStore";
 import { useAuth } from "@/hooks/useAuth";
+import { useEffect, useState } from "react";
 
 export function Header() {
   const { theme, setTheme } = useAppStore();
   const { isAuthenticated } = useAuth();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   const cycleTheme = () => {
     if (theme === "chad") setTheme("dark");
@@ -25,7 +32,7 @@ export function Header() {
         <img
           src="/images/logo.png"
           alt="ChadWallet Logo"
-          className={`w-8 h-8 mr-2 ${theme === "light" ? "invert" : ""}`}
+          className={`w-8 h-8 mr-2 ${mounted && theme === "light" ? "invert" : ""}`}
         />
         CHAD<span className="text-[var(--chad-green)]">WALLET</span>
       </Link>
@@ -61,9 +68,9 @@ export function Header() {
           className="bg-bg-secondary backdrop-blur-md rounded-md hover:ring-foreground/20 hover:ring-1 hover:bg-bg-tertiary transition-all flex items-center justify-center p-2 border border-foreground/10 text-foreground/50 hover:text-foreground"
           title={`Current Theme: ${theme}`}
         >
-          {theme === "dark" && <Moon size={18} />}
-          {theme === "light" && <Sun size={18} />}
-          {theme === "chad" && (
+          {mounted && theme === "dark" && <Moon size={18} />}
+          {mounted && theme === "light" && <Sun size={18} />}
+          {(!mounted || theme === "chad") && (
             <Zap size={18} className="text-[var(--chad-green)]" />
           )}
         </button>

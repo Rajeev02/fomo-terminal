@@ -1,5 +1,6 @@
 "use client";
 import { useAppStore } from "@/store/useAppStore";
+import { useEffect, useState } from "react";
 
 interface TradingViewChartProps {
   tokenAddress: string;
@@ -7,10 +8,16 @@ interface TradingViewChartProps {
 
 export function TradingViewChart({ tokenAddress }: TradingViewChartProps) {
   const theme = useAppStore((state) => state.theme);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   if (!tokenAddress) return null;
 
-  const chartTheme = theme === "light" ? "light" : "dark";
+  const chartTheme = mounted && theme === "light" ? "light" : "dark";
   const birdeyeWidgetUrl = `https://birdeye.so/tv-widget/${tokenAddress}?chain=solana&viewMode=pair&theme=${chartTheme}`;
 
   return (
