@@ -129,14 +129,14 @@ export default function Home() {
             {/* Desktop Frame (iMac Style) */}
             <div className="relative flex flex-col items-center z-10 w-full max-w-[900px] mx-4 md:mx-0">
               {/* Monitor Bezel */}
-              <div className="w-full aspect-[16/10] bg-[#111] rounded-2xl md:rounded-3xl border border-[#27272A] shadow-[0_40px_80px_-20px_rgba(0,0,0,1)] relative flex flex-col overflow-hidden">
+              <div className="w-full aspect-video bg-[#111] rounded-2xl md:rounded-3xl border border-[#27272A] shadow-[0_40px_80px_-20px_rgba(0,0,0,1)] relative flex flex-col overflow-hidden">
                 {/* Inner Screen */}
                 <div className="flex-1 w-full bg-black relative">
                   <Image
                     src="/images/hero-section.png"
                     alt="ChadWallet Desktop UI"
                     fill
-                    className="object-cover scale-[1.35] origin-center"
+                    className="object-cover object-top"
                     priority
                   />
                 </div>
