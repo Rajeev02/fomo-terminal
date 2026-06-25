@@ -94,7 +94,7 @@ export function Banner({ reverse = false }: { reverse?: boolean }) {
   const displayTokens = [...tokens, ...tokens, ...tokens];
 
   return (
-    <div className="w-full overflow-hidden bg-white dark:bg-zinc-950 border-y border-zinc-200 dark:border-zinc-800 py-3 relative flex items-center shadow-inner">
+    <div className="w-full overflow-hidden bg-bg-primary border-y border-foreground/10 py-3 relative flex items-center shadow-inner">
       <div
         className={`flex w-max space-x-8 animate-[marquee_120s_linear_infinite] ${reverse ? "[animation-direction:reverse]" : ""} hover:[animation-play-state:paused]`}
       >
@@ -105,22 +105,22 @@ export function Banner({ reverse = false }: { reverse?: boolean }) {
                 key={`skel-${idx}`}
                 className="flex items-center space-x-3 shrink-0 px-4 py-1"
               >
-                <div className="w-6 h-6 rounded-full bg-zinc-200 dark:bg-zinc-800 animate-pulse" />
-                <div className="w-16 h-4 bg-zinc-200 dark:bg-zinc-800 rounded animate-pulse" />
-                <div className="w-16 h-4 bg-zinc-200 dark:bg-zinc-800 rounded animate-pulse" />
+                <div className="w-6 h-6 rounded-full bg-bg-tertiary animate-pulse" />
+                <div className="w-16 h-4 bg-bg-tertiary rounded animate-pulse" />
+                <div className="w-16 h-4 bg-bg-tertiary rounded animate-pulse" />
               </div>
             ))
           : displayTokens.map((token, idx) => (
               <Link
                 key={`${token.address}-${idx}`}
                 href={`/trade/${token.address}`}
-                className="flex items-center space-x-3 shrink-0 px-4 py-1 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer group"
+                className="flex items-center space-x-3 shrink-0 px-4 py-1 rounded-full hover:bg-bg-secondary transition-colors cursor-pointer group"
               >
                 <TokenIcon token={token} />
-                <span className="font-bold text-zinc-900 dark:text-white group-hover:text-[var(--chad-green)] transition-colors">
+                <span className="font-bold text-foreground group-hover:text-[var(--chad-green)] transition-colors">
                   {token.symbol}
                 </span>
-                <span className="text-zinc-500 dark:text-zinc-400 font-mono">
+                <span className="text-foreground/60 font-mono">
                   $
                   {token.price.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
