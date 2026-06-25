@@ -133,7 +133,7 @@ export default function Home() {
                 {/* Inner Screen */}
                 <div className="flex-1 w-full bg-black relative">
                   <Image
-                    src="/images/hero-desktop.png"
+                    src="/images/hero-section.png"
                     alt="ChadWallet Desktop UI"
                     fill
                     className="object-cover scale-[1.35] origin-center"
