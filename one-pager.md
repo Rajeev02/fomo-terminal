@@ -28,17 +28,18 @@ During this project, we leveraged the **Gemini 3.5 Flash**-powered AI Agent (**A
 
 Below is the chronological breakdown of the development tasks and the approximate duration for each:
 
-| Task Name                      | Description                                                                                                                                                                                                           |    Duration    |
-| :----------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------: |
-| **Scaffolding & Architecture** | Setting up the Next.js 16 framework, Tailwind configuration, folder structure, and renaming the workspace to `fomo-terminal`.                                                                                         | **0.5 Hours**  |
-| **Landing Page & Branding**    | Developing the landing page layout, embedding the desktop mockup, building the dynamic rotating CSS banners, and incorporating store badges.                                                                          | **1.5 Hours**  |
-| **Privy Auth & Wallets**       | Integrating the Privy React SDK, setting up social logins, automatically provisioning embedded Solana wallets, and coding route protection.                                                                           | **1.0 Hours**  |
-| **Market Data Integration**    | Writing proxies for the BirdEye API to fetch trending lists, coin metadata, holder lists, and live trade history.                                                                                                     | **1.5 Hours**  |
-| **Jupiter Swaps & RPCs**       | Implementing the swap panel to fetch live quotes, build serialized transactions from Jupiter, sign via Privy, and broadcast via Alchemy.                                                                              | **1.5 Hours**  |
-| **Theme & UI Polishing**       | Implementing persistent Light/Dark/Chad themes, solving hydration warnings, and replacing hardcoded Tailwind colors with theme variables.                                                                             | **1.0 Hours**  |
-| **Native Candlestick Charts**  | Creating the `/api/birdeye/history` proxy route, adding the `useTokenHistory` hook, and replacing the iframe with a fully responsive, theme-aware canvas-based `lightweight-charts` rendering and timeframe switcher. | **1.5 Hours**  |
-| **CI/CD & Documentation**      | Deploying to Vercel, setting up environment variables, writing developer guides (`project-flow.md`, etc.), and drafting the README and this one-pager.                                                                | **1.0 Hours**  |
-| **Total Development Time**     | _From scaffolding to production-ready deployment on Vercel._                                                                                                                                                          | **~9.5 Hours** |
+| Task Name                      | Description                                                                                                                                                                                                             |    Duration     |
+| :----------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------: |
+| **Scaffolding & Architecture** | Setting up the Next.js 16 framework, Tailwind configuration, folder structure, and renaming the workspace to `fomo-terminal`.                                                                                           |  **0.5 Hours**  |
+| **Landing Page & Branding**    | Developing the landing page layout, embedding the desktop mockup, building the dynamic rotating CSS banners, and incorporating store badges.                                                                            |  **1.5 Hours**  |
+| **Privy Auth & Wallets**       | Integrating the Privy React SDK, setting up social logins, automatically provisioning embedded Solana wallets, and coding route protection.                                                                             |  **1.0 Hours**  |
+| **Market Data Integration**    | Writing proxies for the BirdEye API to fetch trending lists, coin metadata, holder lists, and live trade history.                                                                                                       |  **1.5 Hours**  |
+| **Jupiter Swaps & RPCs**       | Implementing the swap panel to fetch live quotes, build serialized transactions from Jupiter, sign via Privy, and broadcast via Alchemy.                                                                                |  **1.5 Hours**  |
+| **Theme & UI Polishing**       | Implementing persistent Light/Dark/Chad themes, solving hydration warnings, and replacing hardcoded Tailwind colors with theme variables.                                                                               |  **1.0 Hours**  |
+| **Native Candlestick Charts**  | Creating the `/api/birdeye/history` proxy route, adding the `useTokenHistory` hook, and replacing the iframe with a fully responsive, theme-aware canvas-based `lightweight-charts` rendering and timeframe switcher.   |  **1.5 Hours**  |
+| **Mobile Responsiveness**      | Developing the interactive `LaunchAppButton` client component, scaling the spinning mockup rings for viewports, and implementing the mobile bottom navigation bar with conditional column toggling in the trading page. |  **1.0 Hours**  |
+| **CI/CD & Documentation**      | Deploying to Vercel, setting up environment variables, writing developer guides (`project-flow.md`, etc.), and drafting the README and this one-pager.                                                                  |  **1.0 Hours**  |
+| **Total Development Time**     | _From scaffolding to production-ready deployment on Vercel._                                                                                                                                                            | **~10.5 Hours** |
 
 ---
 
@@ -85,6 +86,14 @@ Throughout development, several technical challenges were resolved:
 
 - **The Issue:** In local mock development (without a BirdEye API key), the trades proxy returned timestamps in seconds. However, the client component evaluated trade timestamps using `new Date(t.blockTime)`, which expects milliseconds, causing all trade dates in mock mode to display incorrectly as dates from January 1970.
 - **The Resolution:** Corrected the mock trades payload builder in `src/app/api/birdeye/trades/route.ts` to multiply the mock Unix timestamp by 1000, aligning it with milliseconds and rendering the trade times accurately in the UI.
+
+### 9. Mobile Layout Clutter & Missing Interactivity on Mobile
+
+- **The Issue:** The trading terminal's three-column layout stacked vertically on mobile screens, making it extremely cluttered and hard to navigate. Furthermore, the "Launch Web App" button was hidden on mobile devices, preventing mobile reviewers from launching the web experience, and the spinning graphic rings overflowed off-screen, clipping all rotating avatars.
+- **The Resolution:**
+  1. Developed a sticky mobile bottom navigation bar (`Explore`, `Chart`, `Trade`, `Portfolio`) on screens under `lg` breakpoints, using conditional CSS classes to toggle the active column's visibility so only one focused pane is shown at a time.
+  2. Created the client-side `LaunchAppButton` component to handle Privy authentication/routing and displayed it on mobile viewports.
+  3. Scaled the spinning rings dynamically using media queries (`w-[320px]` / `w-[460px]` on mobile) so the rotating avatars remain centered and fully visible within mobile screens.
 
 ---
 
