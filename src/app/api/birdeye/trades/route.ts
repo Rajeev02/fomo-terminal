@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
           side: Math.random() > 0.5 ? "buy" : "sell",
           volumeUSD: Math.random() * 5000 + 100,
           tokens: Math.random() * 100000,
-          blockTime: Math.floor(Date.now() / 1000) - i * 15,
+          blockTime: Date.now() - i * 15 * 1000,
         })),
       },
     });
