@@ -81,6 +81,11 @@ Throughout development, several technical challenges were resolved:
 - **The Issue:** The canvas chart was retrieving its layout colors (like background and grid wicks) by querying CSS custom variables from the DOM dynamically on render. However, because both the global `ThemeProvider` and the `TradingViewChart` subscribe to the theme change state simultaneously, a race condition occurred: the chart component would read the DOM before the parent provider had updated the theme classes on the root element. This left the chart with default styling (such as a white background) instead of matching the active dark/chad theme.
 - **The Resolution:** Refactored the chart layout styling logic to use a static TypeScript mapping object (`getThemeColors(theme)`) instead of querying the DOM dynamically. This guarantees immediate, typesafe theme updates without race conditions or side-effects.
 
+### 8. Mock Live Trades Timestamp Mismatch
+
+- **The Issue:** In local mock development (without a BirdEye API key), the trades proxy returned timestamps in seconds. However, the client component evaluated trade timestamps using `new Date(t.blockTime)`, which expects milliseconds, causing all trade dates in mock mode to display incorrectly as dates from January 1970.
+- **The Resolution:** Corrected the mock trades payload builder in `src/app/api/birdeye/trades/route.ts` to multiply the mock Unix timestamp by 1000, aligning it with milliseconds and rendering the trade times accurately in the UI.
+
 ---
 
 ## 4. Proposed Improvements
