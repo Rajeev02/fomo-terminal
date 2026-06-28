@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="px-12 py-16 flex flex-col md:flex-row items-start justify-between bg-[var(--hero-bg)]">
+    <footer className="px-6 md:px-12 py-16 flex flex-col md:flex-row items-start justify-between bg-[var(--hero-bg)]">
       <div className="flex flex-col gap-4">
         <Link
           href="/"
