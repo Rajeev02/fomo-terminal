@@ -45,33 +45,39 @@ export function TradingViewChart({ tokenAddress }: TradingViewChartProps) {
   useEffect(() => {
     if (!mounted || !chartContainerRef.current || !historyData) return;
 
-    // Helper to extract computed Tailwind theme variables
-    const getCssVar = (name: string, fallback: string): string => {
-      if (typeof window === "undefined") return fallback;
-      const val = getComputedStyle(document.documentElement)
-        .getPropertyValue(name)
-        .trim();
-      return val || fallback;
+    // Theme palette mappings to avoid race conditions with DOM class updates
+    const getThemeColors = (t: string) => {
+      switch (t) {
+        case "light":
+          return {
+            bgColor: "#ffffff",
+            textColor: "#09090b",
+            gridColor: "#e4e4e7",
+            greenColor: "#22c55e",
+            downColor: "#ef4444",
+          };
+        case "dark":
+          return {
+            bgColor: "#0a0a0a",
+            textColor: "#f5f5f5",
+            gridColor: "#262626",
+            greenColor: "#39ff14",
+            downColor: "#ef4444",
+          };
+        case "chad":
+        default:
+          return {
+            bgColor: "#060510",
+            textColor: "#eaedff",
+            gridColor: "#1a1a24",
+            greenColor: "#39ff14",
+            downColor: "#9d00ff",
+          };
+      }
     };
 
-    const isLight = theme === "light";
-    const bgColor = getCssVar("--bg-primary", isLight ? "#ffffff" : "#060510");
-    const textColor = getCssVar(
-      "--foreground",
-      isLight ? "#09090b" : "#eaedff"
-    );
-    const gridColor = getCssVar(
-      "--bg-tertiary",
-      isLight ? "#e4e4e7" : "#1a1a24"
-    );
-    const greenColor = getCssVar(
-      "--chad-green",
-      isLight ? "#22c55e" : "#39ff14"
-    );
-    const purpleColor = getCssVar("--chad-purple", "#9d00ff");
-    const redColor = "#ef4444";
-
-    const downColor = theme === "chad" ? purpleColor : redColor;
+    const { bgColor, textColor, gridColor, greenColor, downColor } =
+      getThemeColors(theme);
 
     // Create the chart instance
     const chart = createChart(chartContainerRef.current, {
