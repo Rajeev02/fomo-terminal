@@ -298,15 +298,15 @@ export default function Home() {
               </div>
 
               {/* Spinning background rings */}
-              <div className="absolute inset-0 m-auto z-1 w-[80vw] h-[80vw] md:w-[30vw] md:h-[30vw] rounded-full border border-dashed border-foreground/20 animate-[spin_30s_linear_infinite_reverse]">
+              <div className="absolute inset-0 m-auto z-1 w-[600px] h-[600px] md:w-[30vw] md:h-[30vw] max-w-none max-h-none shrink-0 aspect-square rounded-full border border-dashed border-foreground/20 animate-[spin_30s_linear_infinite_reverse]">
                 {/* Inner Ring Avatars */}
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-0">
-                  <div className="w-10 h-10 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden flex items-center justify-center animate-[spin_30s_linear_infinite]">
+                  <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden flex items-center justify-center animate-[spin_30s_linear_infinite]">
                     <Logo className="w-3/4 h-3/4 object-contain" alt="" />
                   </div>
                 </div>
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[120deg]">
-                  <div className="w-12 h-12 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden animate-[spin_30s_linear_infinite]">
+                  <div className="w-10 h-10 md:w-12 md:h-12 shrink-0 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden animate-[spin_30s_linear_infinite]">
                     <Image
                       width={24}
                       height={24}
@@ -317,15 +317,15 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[240deg]">
-                  <div className="w-14 h-14 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden flex items-center justify-center animate-[spin_30s_linear_infinite]">
+                  <div className="w-10 h-10 md:w-14 md:h-14 shrink-0 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden flex items-center justify-center animate-[spin_30s_linear_infinite]">
                     <Logo className="w-3/4 h-3/4 object-contain" alt="" />
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-0 m-auto z-1 w-[120vw] h-[120vw] md:w-[45vw] md:h-[45vw] rounded-full border border-dashed border-foreground/10 animate-[spin_45s_linear_infinite]">
+              <div className="absolute inset-0 m-auto z-1 w-[800px] h-[800px] md:w-[45vw] md:h-[45vw] max-w-none max-h-none shrink-0 aspect-square rounded-full border border-dashed border-foreground/10 animate-[spin_45s_linear_infinite]">
                 {/* Outer Ring Avatars */}
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[45deg]">
-                  <div className="w-16 h-16 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
+                  <div className="w-12 h-12 md:w-16 md:h-16 shrink-0 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
                     <Image
                       width={24}
                       height={24}
@@ -336,7 +336,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[160deg]">
-                  <div className="w-12 h-12 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-foreground/10 overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
+                  <div className="w-10 h-10 md:w-12 md:h-12 shrink-0 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-foreground/10 overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
                     <Image
                       width={24}
                       height={24}
@@ -347,7 +347,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[280deg]">
-                  <div className="w-16 h-16 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-[var(--chad-purple)] overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
+                  <div className="w-12 h-12 md:w-16 md:h-16 shrink-0 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-[var(--chad-purple)] overflow-hidden animate-[spin_45s_linear_infinite_reverse]">
                     <Image
                       width={24}
                       height={24}

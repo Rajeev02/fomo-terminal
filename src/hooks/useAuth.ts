@@ -7,12 +7,14 @@ export function useAuth() {
 
   // Find the Solana embedded wallet specifically, as we are a Solana app.
   const activeWallet =
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     wallets.find(
-      (w: any) => w.walletClientType === "privy" && w.chainType === "solana"
+      (w) =>
+        w.walletClientType === "privy" &&
+        (w as unknown as { chainType: string }).chainType === "solana"
     ) ||
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    wallets.find((w: any) => w.chainType === "solana");
+    wallets.find(
+      (w) => (w as unknown as { chainType: string }).chainType === "solana"
+    );
 
   // Format the user's name based on their login method (email or google name)
   const userName =

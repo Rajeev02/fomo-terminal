@@ -25,7 +25,7 @@ export function Header() {
   };
 
   return (
-    <header className="items-center h-13 pt-4 pb-2 px-6 justify-between hidden md:flex sticky top-0 z-50 bg-bg-primary/80 backdrop-blur-lg border-b border-foreground/5">
+    <header className="items-center h-13 pt-4 pb-2 px-4 md:px-6 justify-between flex sticky top-0 z-50 bg-bg-primary/80 backdrop-blur-lg border-b border-foreground/5">
       <Link
         href="/"
         className="flex items-center text-foreground font-black text-2xl tracking-tighter hover:opacity-80 transition-opacity"
