@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>ChadWallet</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --ink: #0f172a;
+      --muted: #475569;
+      --line: #e2e8f0;
+      --primary: #1e3a8a;
+      --green: #16a34a;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      padding: 24px 20px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, sans-serif;
+      line-height: 1.45;
+    }
+    
+    .container {
+      max-width: 960px;
+      margin: auto;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 30px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, .06);
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+      gap: 20px;
+    }
+    
+    h1, h2, h3 {
+      font-family: Outfit, sans-serif;
+      color: var(--primary);
+      margin: 0;
+    }
+    
+    h1 {
+      font-size: 1.8rem;
+    }
+    
+    h2 {
+      font-size: 1.1rem;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 4px;
+      margin: 18px 0 10px;
+    }
+    
+    p {
+      margin: .25rem 0 .6rem;
+      font-size: 0.88rem;
+    }
+    
+    .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    
+    .btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--primary);
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    
+    .btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    
+    .badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: var(--primary);
+      border: 1px solid #c7d2fe;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+    
+    /* Main Content Two-Column Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    
+    .col {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fcfcfd;
+    }
+    
+    .card h3 {
+      font-size: 0.92rem;
+      margin-bottom: 6px;
+    }
+    
+    ul {
+      margin: 0;
+      padding-left: 16px;
+    }
+    
+    li {
+      font-size: 0.82rem;
+      margin-bottom: 3px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+    }
+    
+    th {
+      background: var(--primary);
+      color: #fff;
+    }
+    
+    th, td {
+      border: 1px solid var(--line);
+      padding: 6px 8px;
+      font-size: 0.82rem;
+      vertical-align: top;
+    }
+    
+    .checks {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    
+    .checks li {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 4px;
+    }
+    
+    .checks li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    .scope-box {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 14px;
+      background: #fcfcfd;
+      margin-top: 15px;
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+    
+    footer {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 24px;
+      font-size: .8rem;
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+    }
+    
+    @media(max-width: 820px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+
+    @media(max-width: 720px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Print configuration to force onto a single page */
+    @media print {
+      html, body {
+        background: #fff;
+        color: #0f172a;
+        margin: 0;
+        padding: 0;
+        height: auto;
+        overflow: visible;
+      }
+      
+      body {
+        font-size: 7.2pt;
+        line-height: 1.2;
+      }
+      
+      .container {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+        margin: 0;
+      }
+      
+      .main-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 14px !important;
+      }
+      
+      header {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        text-align: left !important;
+        align-items: flex-start !important;
+        margin-bottom: 6px !important;
+        padding-bottom: 4px !important;
+      }
+      
+      header div:first-child {
+        text-align: left !important;
+      }
+      
+      header div:last-child {
+        text-align: right !important;
+        border-left: 1px solid var(--line) !important;
+        padding-left: 15px !important;
+        margin-top: 0 !important;
+        width: auto !important;
+      }
+      
+      h1 {
+        font-size: 1.25rem;
+      }
+      
+      h2 {
+        font-size: 0.9rem;
+        margin: 8px 0 4px !important;
+        padding-bottom: 1px !important;
+      }
+      
+      th, td {
+        padding: 2px 4px !important;
+        font-size: 6.8pt !important;
+      }
+      
+      .card {
+        padding: 6px 10px !important;
+      }
+      
+      .badge {
+        padding: 2px 6px;
+        font-size: 6.2pt;
+      }
+      
+      .btn {
+        display: none;
+      }
+
+      .scope-box {
+        margin-top: 8px !important;
+        padding: 8px 10px !important;
+      }
+      
+      footer {
+        margin-top: 8px;
+        padding-top: 4px;
+      }
+      
+      @page {
+        size: A4 portrait;
+        margin: 5mm 6mm 5mm 6mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div style="flex: 1; text-align: left;">
+        <h1>ChadWallet</h1>
+        <p class="meta" style="font-weight: 600; margin: 2px 0 6px;">Founding Engineer Assignment Summary</p>
+        <p style="margin: 0; font-size: 0.82rem; line-height: 1.35; max-width: 600px;">Built as a production-oriented prototype inspired by <strong>fomo.family</strong>, focusing on clean UX, embedded Solana wallet onboarding, real-time market data and scalable architecture.</p>
+      </div>
+      <div style="text-align: right; font-size: 0.8rem; line-height: 1.3; min-width: 230px; border-left: 1px solid var(--line); padding-left: 15px;">
+        <p style="margin: 0 0 4px;"><strong>Development Time</strong><br/><span style="color: var(--primary); font-weight: bold;">~11 Hours</span></p>
+        <p style="margin: 0 0 4px;"><strong>Live Demo</strong><br/><a href="https://fomo-terminal.vercel.app/" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600;">fomo-terminal.vercel.app</a></p>
+        <p style="margin: 0;"><strong>GitHub Repository</strong><br/><span style="color: var(--muted); font-size: 0.75rem;">Private for review. Access available upon request.</span></p>
+      </div>
+    </header>
+
+    <div class="main-grid">
+      <!-- LEFT COLUMN -->
+      <div class="col">
+        <div>
+          <h2>1. The Design &amp; GitHub Repo</h2>
+          <p><strong>Objective:</strong> Build a polished Solana trading experience inspired by <strong>fomo.family</strong>, focusing on clean UX, responsive layouts and seamless wallet onboarding.</p>
+          
+          <h3>Technology Stack</h3>
+          <div class="badges">
+            <span class="badge">Next.js 16</span>
+            <span class="badge">React 19</span>
+            <span class="badge">TypeScript</span>
+            <span class="badge">Tailwind CSS v4</span>
+            <span class="badge">Zustand</span>
+            <span class="badge">React Query</span>
+            <span class="badge">Privy</span>
+            <span class="badge">BirdEye API</span>
+            <span class="badge">Jupiter API</span>
+            <span class="badge">Alchemy RPC</span>
+            <span class="badge">Lightweight Charts (v5.2)</span>
+          </div>
+          
+          <div class="grid" style="margin-top:10px">
+            <div class="card">
+              <h3>Key Features</h3>
+              <ul>
+                <li>Landing page mockup style</li>
+                <li>Google Sign-In (Privy)</li>
+                <li>Apple Sign-In (planned)</li>
+                <li>Embedded Solana Wallet Provisioning</li>
+                <li>Trending tokens discovery</li>
+                <li>Responsive canvas charts</li>
+                <li>Buy / Sell via Jupiter API</li>
+                <li>Portfolio dashboard</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Engineering Focus</h3>
+              <ul>
+                <li>Reusable React components</li>
+                <li>API abstraction</li>
+                <li>Responsive-first UI</li>
+                <li>Type-safe architecture</li>
+                <li>Graceful error handling</li>
+                <li>CI/CD deployment</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2>2. AI Tools &amp; Task Durations</h2>
+          <p>AI acted as an engineering assistant for scaffolding and layout, while planning, testing, and validation were handled manually.</p>
+          
+          <table style="margin-bottom: 10px;">
+            <thead>
+              <tr>
+                <th style="width: 30%;">Tool</th>
+                <th>Usage Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Antigravity (Gemini 3.5)</strong></td>
+                <td>Scaffolding, component gen, API assistance, debugging.</td>
+              </tr>
+              <tr>
+                <td><strong>ChatGPT</strong></td>
+                <td>Architecture discussions, docs, debugging, code review.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Milestone Chronological Durations</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Milestone Task</th>
+                <th>Focus &amp; Implementation Details</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Research &amp; Plan</td>
+                <td>Requirement analysis and API mapping.</td>
+                <td>0.5 hr</td>
+              </tr>
+              <tr>
+                <td>Setup &amp; Config</td>
+                <td>Next 16, React 19, &amp; Tailwind v4 setup.</td>
+                <td>0.5 hr</td>
+              </tr>
+              <tr>
+                <td>Landing &amp; Branding</td>
+                <td>iMac mockup frame &amp; rotating banners.</td>
+                <td>1.5 hrs</td>
+              </tr>
+              <tr>
+                <td>Auth &amp; Wallet</td>
+                <td>Privy social login &amp; embedded Solana wallet.</td>
+                <td>1.0 hr</td>
+              </tr>
+              <tr>
+                <td>Market Data</td>
+                <td>BirdEye API history &amp; mock proxies.</td>
+                <td>1.5 hrs</td>
+              </tr>
+              <tr>
+                <td>Trading Flow</td>
+                <td>Jupiter quotes, txs, &amp; Alchemy RPC.</td>
+                <td>2.0 hrs</td>
+              </tr>
+              <tr>
+                <td>UI Polish</td>
+                <td>Light/Dark/Chad theme configurations.</td>
+                <td>1.0 hr</td>
+              </tr>
+              <tr>
+                <td>Testing</td>
+                <td>Cross-device checks &amp; mock validations.</td>
+                <td>1.0 hr</td>
+              </tr>
+              <tr>
+                <td>Deployment</td>
+                <td>Vercel production edge deployment.</td>
+                <td>1.0 hr</td>
+              </tr>
+              <tr>
+                <td>Documentation</td>
+                <td>Developer guides &amp; code annotations.</td>
+                <td>1.0 hr</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin-top: 6px; font-weight: 600;">Overall Development Time: ~11 Hours</p>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="col">
+        <div>
+          <h2>3. Issues &amp; Resolutions</h2>
+          <div class="grid">
+            <div class="card" style="grid-column: span 2;">
+              <h3>1. BirdEye API Reliability</h3>
+              <p style="font-size: 0.8rem; margin: 0 0 2px;"><strong>Problem:</strong> API rate limits (HTTP 429) and intermittent latency.</p>
+              <p style="font-size: 0.8rem; margin: 0; color: var(--muted);"><strong>Solution:</strong> Integrated automatic API key rotation and built mock data fallback engines to guarantee 100% uptime.</p>
+            </div>
+            <div class="card" style="grid-column: span 2;">
+              <h3>2. Theme Hydration</h3>
+              <p style="font-size: 0.8rem; margin: 0 0 2px;"><strong>Problem:</strong> Next.js SSR clashing with Zustand localStorage client cache.</p>
+              <p style="font-size: 0.8rem; margin: 0; color: var(--muted);"><strong>Solution:</strong> Deferred rendering of theme-dependent visual assets using a client-side <code>mounted</code> state in <code>useEffect</code>.</p>
+            </div>
+            <div class="card" style="grid-column: span 2;">
+              <h3>3. Privy Solana Wallet Filtering</h3>
+              <p style="font-size: 0.8rem; margin: 0 0 2px;"><strong>Problem:</strong> Privy returned EVM wallets first in multi-chain browser environments.</p>
+              <p style="font-size: 0.8rem; margin: 0; color: var(--muted);"><strong>Solution:</strong> Refactored auth hooks to strictly query for wallets matching <code>chainType === "solana"</code>.</p>
+            </div>
+            <div class="card" style="grid-column: span 2;">
+              <h3>4. Responsive Mobile Layout</h3>
+              <p style="font-size: 0.8rem; margin: 0; color: var(--muted); margin-bottom: 2px;"><strong>Problem:</strong> Vertical stacking of three-column terminal layout cluttered mobile viewports.</p>
+              <p style="font-size: 0.8rem; margin: 0; color: var(--muted);"><strong>Solution:</strong> Designed a mobile bottom navigation bar and toggle visibility CSS classes to show a single focused pane.</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2>4. Proposed Improvements</h2>
+          <ul class="checks">
+            <li><strong>1. Multi-RPC Failover:</strong> Alternate connection links (Helius, QuickNode, Alchemy) for resilient txn routing.</li>
+            <li><strong>2. Portfolio Analytics:</strong> Add charts tracking historical asset P/L and detailed holdings.</li>
+            <li><strong>3. Database Persistence:</strong> Enable persistent watchlists and custom price alerts using Supabase.</li>
+            <li><strong>4. Fiat On-Ramp:</strong> Link Privy with Stripe or MoonPay to support direct credit card purchases.</li>
+            <li><strong>5. Automated Testing:</strong> Introduce Jest unit tests and Playwright E2E testing for critical swap routes.</li>
+            <li><strong>6. Redis Caching:</strong> Cache responses on BirdEye trending lists to minimize API bounds.</li>
+          </ul>
+        </div>
+        
+        <div class="scope-box">
+          <h3 style="font-family: Outfit, sans-serif; color: var(--primary); font-size: 0.82rem; margin: 0 0 4px; display: flex; align-items: center; gap: 6px;">
+            <span>ℹ️</span> Current Scope &amp; Authentication Accuracy
+          </h3>
+          <p style="margin: 0 0 4px; font-size: 0.78rem;"><strong>Current Implementation:</strong> ✅ Google Sign-In using Privy &nbsp;&bull;&nbsp; ✅ Embedded Solana Wallet Provisioning</p>
+          <p style="margin: 0; font-size: 0.78rem; color: var(--muted);"><strong>Planned:</strong> ⏳ Apple Sign-In (requires Apple Developer Account, Services ID, Team ID, Private Keys, and Domain Verification before enabling).</p>
+        </div>
+      </div>
+    </div>
+
+   </div>
+</body>
+</html>
