@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { fetchBirdEye } from "@/utils/birdeye";
 import { env } from "@/config/env";
 
 function getMockHistory(
@@ -104,21 +105,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const url = `https://public-api.birdeye.so/defi/ohlcv?address=${address}&type=${type}&time_from=${timeFrom}&time_to=${timeTo}`;
-    const response = await fetch(url, {
-      headers: {
-        "X-API-KEY": apiKey,
-        "x-chain": "solana",
-      },
-      next: { revalidate: 30 }, // Cache history for 30 seconds
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `BirdEye OHLCV API error: ${response.status} ${response.statusText}`
-      );
-    }
-
-    const json = await response.json();
+    const json = await fetchBirdEye(url, 30);
     return NextResponse.json(json);
   } catch (error) {
     console.error(

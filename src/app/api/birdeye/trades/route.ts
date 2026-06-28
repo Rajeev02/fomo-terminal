@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { fetchBirdEye } from "@/utils/birdeye";
 import { env } from "@/config/env";
 
 function getMockTrades() {
@@ -33,24 +34,10 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = await fetch(
+    const json = await fetchBirdEye(
       `https://public-api.birdeye.so/defi/txs/token?address=${address}&offset=0&limit=30&tx_type=swap`,
-      {
-        headers: {
-          "X-API-KEY": apiKey,
-          "x-chain": "solana",
-        },
-        next: { revalidate: 5 }, // Cache for 5 seconds for live trades
-      }
+      5
     );
-
-    if (!response.ok) {
-      throw new Error(
-        `BirdEye API error: ${response.status} ${response.statusText}`
-      );
-    }
-
-    const json = await response.json();
     if (json.success && json.data?.items) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       json.data.items = json.data.items.map((item: any) => ({

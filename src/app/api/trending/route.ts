@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { fetchBirdEye } from "@/utils/birdeye";
 
 const mockTrendingTokens = [
   {
@@ -47,24 +48,10 @@ export async function GET() {
   }
 
   try {
-    const response = await fetch(
+    const json = await fetchBirdEye(
       "https://public-api.birdeye.so/defi/tokenlist?sort_by=v24hUSD&sort_type=desc&offset=0&limit=20",
-      {
-        headers: {
-          "X-API-KEY": apiKey,
-          "x-chain": "solana",
-        },
-        next: { revalidate: 60 }, // Cache for 60 seconds
-      }
+      60
     );
-
-    if (!response.ok) {
-      throw new Error(
-        `BirdEye API error: ${response.status} ${response.statusText}`
-      );
-    }
-
-    const json = await response.json();
 
     // Transform BirdEye response to our Token format
     const tokens = json.data.tokens.map(

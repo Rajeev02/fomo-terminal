@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { fetchBirdEye } from "@/utils/birdeye";
 import { env } from "@/config/env";
 
 function getMockHolders() {
@@ -33,24 +34,10 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = await fetch(
+    const json = await fetchBirdEye(
       `https://public-api.birdeye.so/defi/v3/token/holder?address=${address}&offset=0&limit=10`,
-      {
-        headers: {
-          "X-API-KEY": apiKey,
-          "x-chain": "solana",
-        },
-        next: { revalidate: 60 }, // Cache for 60 seconds
-      }
+      60
     );
-
-    if (!response.ok) {
-      throw new Error(
-        `BirdEye API error: ${response.status} ${response.statusText}`
-      );
-    }
-
-    const json = await response.json();
     return NextResponse.json(json);
   } catch (error) {
     console.error(
