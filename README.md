@@ -1,94 +1,141 @@
-# ChadWallet
+# ⚡ ChadWallet (FomoTerminal)
 
-![ChadWallet Hero](./public/images/hero-section.png)
+[![ChadWallet Live Dashboard](https://img.shields.io/badge/Live-Vercel-39FF14?style=for-the-badge&logo=vercel&logoColor=black)](https://fomo-terminal.vercel.app/)
+[![Solana Powered](https://img.shields.io/badge/Solana-Mainnet-9945FF?style=for-the-badge&logo=solana&logoColor=white)](https://solana.com/)
+[![React Version](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Next.js Version](https://img.shields.io/badge/Next.js-16--Turbopack-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 
-## What is this project?
-
-ChadWallet is a modern, high-performance web application designed for the Solana ecosystem. It serves as an intuitive and frictionless gateway for users to discover trending tokens, view real-time market data, and execute decentralized swaps without the steep learning curve typically associated with crypto wallets.
-
-## Why was this project created?
-
-This project was developed as part of a Founding Engineer assessment for ChadWallet. The core objective was to build an application that mirrors the premium aesthetic of top-tier platforms (like fomo.family) while integrating a robust set of Web3 tools. The goal was to prove that complex blockchain interactions—like wallet creation and token swapping—can be abstracted into a seamless, user-friendly, "gasless-feeling" Web2-style experience.
+**ChadWallet** is a premium, high-performance web-based trading terminal designed for the Solana blockchain. Drawing aesthetic inspiration from slick, social-first crypto platforms like [fomo.family](https://fomo.family), ChadWallet abstracts away the typical friction points of Web3 onboarding—delivering a "gasless-feeling" Web2 user experience.
 
 ---
 
-## End-to-End Implementation View (What We Built)
+## 🚀 Key Features & Capabilities (What We Achieved)
 
-To fully satisfy the assessment requirements, this project implements a complete end-to-end user journey:
+### 1. Frictionless Social Authentication & Embedded Wallets
 
-### 1. The Landing Page & Discovery
+- **One-Click Social Logins:** Seamlessly authenticate using **Google** or **Apple** credentials powered by **Privy**.
+- **Invisible Non-Custodial Wallets:** Privy instantly provisions an embedded, secure Solana wallet in the background upon login. Users do not need seed phrases, browser extensions, or pre-existing Web3 knowledge.
 
-- **Brand Assets & Aesthetic:** We strictly implemented the ChadWallet branding, utilizing the provided assets and applying a "fomo.family" inspired dark-mode glassmorphism design.
-- **Mobile Links:** App Store and Google Play links are prominently featured for mobile conversion.
-- **Live Market Marquees:** Two rotating banners display live, trending Solana tokens (fetched from BirdEye). Clicking any token instantly drops the user into that token's specific trading dashboard.
+### 2. High-Performance Trading Terminal UI (`/trade/[token]`)
 
-### 2. Frictionless Authentication
+- **Three-Column Responsive Layout:**
+  - _Left Column (Discovery):_ Real-time trending tokens list fetched live from the Solana ecosystem.
+  - _Middle Column (Analysis):_ Token price information, native interactive charts, live trade history feeds, and top holders tables.
+  - _Right Column (Actions):_ Jupiter DEX aggregator swap panels and real-time portfolio balance listings.
+- **100% Mobile Responsive Optimization:** Integrates a sticky mobile bottom tab navigation bar (`Explore`, `Chart`, `Trade`, `Portfolio`) that toggles visibility of the active panel, transforming the stacked vertical viewport into a clean, single-focused app experience on small viewports.
 
-- **Privy Integration:** Users can click "Login" and authenticate via **Google** or **Apple**.
-- **Embedded Wallets:** The moment they log in, Privy seamlessly provisions an invisible, non-custodial Solana wallet in the background. No seed phrases, no Chrome extensions required.
+### 3. Native Canvas-Based Charting (Lightweight Charts)
 
-### 3. The Trading Dashboard (`/trade/[token]`)
+- **No Iframes:** Replaced lagging TradingView/BirdEye widget iframes with a native, interactive canvas chart using `@tradingview/lightweight-charts`.
+- **Dynamic Timeframe Selectors:** Users can toggle resolutions ("15m", "1H", "4H", "1D") directly on the chart, triggering dynamic history windows and ticks.
+- **Volume Panels:** Secondary volume histograms are rendered directly onto the bottom 20% of the chart canvas.
+- **Instant Theme Synchronization:** Redesigned color-wick drawing to use a static TypeScript theme mapping (`getThemeColors`), resolving hydration race conditions and displaying instant theme updates (Dark/Light/Chad).
 
-The trading interface is divided into three highly functional panels:
+### 4. Optimal Price Swaps (Jupiter Aggregator)
 
-- **Left Panel (Discovery):** A live-updating sidebar of the top trending tokens on Solana.
-- **Middle Panel (Analysis):**
-  - Displays real-time token metrics (Price, Market Cap, 24h Volume).
-  - Embeds a professional-grade **TradingView Chart** for the selected asset.
-  - Features tabs displaying the most recent **Live Trades** and top **Token Holders**.
-- **Right Panel (Action):** The swap interface. Users input an amount of SOL to swap for the token.
+- **Jupiter API Integration:** Queries optimal swap routes and slippage bounds across all Solana DEX pools.
+- **Alchemy RPC Node:** signs compiled swap transactions via Privy's embedded wallet and broadcasts the payload directly to the Solana network.
 
-### 4. Swap Execution Flow
+### 5. Automated API Key Rotation & Resiliency
 
-When a user clicks "Swap", the backend automatically:
-
-1. Fetches the absolute best price route across all Solana DEXs using the **Jupiter Aggregator API**.
-2. Retrieves a serialized swap transaction.
-3. Prompts the user's embedded Privy wallet to sign the transaction.
-4. Broadcasts the signed transaction to the Solana network via the **Alchemy RPC**.
+- **Multi-Key Cycling:** Supports a comma-separated list of keys under `BIRDEYE_API_KEY`. If a key hits rate limits (HTTP 429 Too Many Requests) or fails, the central fetch utility (`fetchBirdEye`) automatically logs the issue and cycles to the next key.
+- **Resilient Fallback Engines:** If all keys fail, all endpoints automatically serve realistic, structured mock datasets, guaranteeing **100% uptime** and preventing Vercel HTTP 500 error pages.
 
 ---
 
-## Third-Party Libraries, SDKs & Infrastructure
+## 🛠️ Technology Stack & Libraries
 
-Here is the exact breakdown of the tooling we used to build this architecture:
+- **Core Framework:** [Next.js 16 (App Router)](https://nextjs.org/) utilizing React 19 and Turbopack.
+- **Styling & Design System:** [Tailwind CSS v4](https://tailwindcss.com/) with dark-mode glassmorphism accents.
+- **State Management:** [Zustand](https://github.com/pmndrs/zustand) for global persistent UI settings.
+- **Data Fetching & Cache:** [React Query (TanStack)](https://tanstack.com/query/latest) for frontend polling intervals and deduplication.
+- **Auth & Wallets:** [Privy React SDK](https://privy.io/) for social sign-in and embedded Solana wallet provisionings.
+- **DEX Swap Aggregator:** [Jupiter API](https://developers.jup.ag/) for transaction serialization and route quotes.
+- **Solana Connection:** `@solana/web3.js` and Alchemy RPC nodes.
+- **Canvas Charts:** `@tradingview/lightweight-charts` (v5.2) for charting.
 
-- **Next.js 16 & Tailwind CSS:** Next.js provides the App Router, allowing us to build secure, server-side API routes (`/api/birdeye`) to hide our secret API keys from the browser. Tailwind allowed us to rapidly execute the complex responsive layouts and premium aesthetic.
-- **Vercel:** Used for zero-config, immediate CI/CD deployment. It leverages edge networks (powered by Cloudflare under the hood) for global caching and lightning-fast page loads. _(Note: Supabase was skipped as this specific milestone did not require a custom relational database, saving unnecessary overhead)._
-- **Privy (`@privy-io/react-auth`):** The engine behind our social authentication (Google/Apple) and the automatic generation of embedded Solana wallets.
-- **BirdEye API:** The industry standard for Solana data. We used it to power the live Trending Tokens, historical price data, holder lists, and live trade history.
-- **RPC (Alchemy):** Once our user's embedded wallet signs a transaction, we broadcast it directly to the blockchain via our highly reliable Alchemy RPC node.
-- **TradingView:** To avoid bloating our app size by building a custom charting library from scratch, we integrated the highly optimized TradingView widget (provided via BirdEye).
-- **Jupiter API:** We used Solana's premier liquidity aggregator to fetch optimal price quotes and generate the exact transaction instructions needed to execute trades.
-- **Zustand & React Query:** Zustand handles global UI state (like the Light/Dark theme), while React Query handles caching our BirdEye API requests so we don't spam the network when components re-render.
+---
 
-## Project Structure
+## 📂 Project Directory Structure
 
 ```text
-ChadWallet/
-├── docs/                      # Extensive end-to-end and technical documentation
-├── public/                    # Static assets (images, logos, SVGs)
+fomo-terminal/
+├── docs/                      # Technical flow and end-to-end user guides
+├── public/                    # Static branding graphics and mp4 previews
 ├── src/
 │   ├── app/                   # Next.js App Router (Pages, Layouts)
-│   │   ├── api/               # Server-side Route Handlers (API proxies for BirdEye/Jupiter)
-│   │   ├── trade/             # Trading Dashboard routes
-│   │   └── page.tsx           # Landing Page
-│   ├── components/            # Reusable React UI Components
-│   │   ├── auth/              # Auth buttons and protected route wrappers
-│   │   ├── swap/              # Jupiter swap interface
-│   │   └── ui/                # Base UI elements (Buttons, Tables, Tabs)
-│   ├── config/                # Environment variable validation and config
-│   ├── hooks/                 # Custom React hooks (useAuth, useBirdeye, useJupiter)
-│   ├── store/                 # Zustand state stores
-│   └── lib/                   # Utility functions (formatting, clsx)
-├── next.config.ts             # Next.js configuration and SVG security policies
-├── tailwind.config.ts         # Tailwind theme, colors, and animations
-└── package.json               # Project dependencies and scripts
+│   │   ├── api/               # Server-side API proxy routes (resilient endpoints)
+│   │   ├── trade/             # Trading Dashboard route
+│   │   └── page.tsx           # Home Landing Page
+│   ├── components/            # Reusable UI widgets
+│   │   ├── auth/              # Privy AuthButton and ProtectedRoute wrapper
+│   │   ├── swap/              # SwapPanel and Sniper settings card
+│   │   ├── ui/                # Shared buttons, tables, and tabs
+│   │   ├── Banner.tsx         # Top/Bottom rotating token marquee banners
+│   │   └── TradingViewChart.tsx # Lightweight Canvas Chart component
+│   ├── config/                # Environment schema validation
+│   ├── hooks/                 # Centralized fetching hooks (useSolana, useBirdeye)
+│   ├── store/                 # Zustand theme and panel preferences
+│   └── utils/                 # Resilient helper utilities (fetchBirdEye key rotation)
+├── .env.local                 # Local environment keys (ignored by Git)
+├── package.json               # Dependency libraries and project run scripts
+└── tsconfig.json              # TypeScript compilation rules
 ```
 
-## Roadmap (Future Iterations)
+---
 
-1. **Portfolio Tracking:** A dedicated dashboard for users to view their embedded wallet's token balances and historical performance.
-2. **Fiat On-Ramp:** Integration with Stripe or MoonPay to allow users to purchase SOL directly with a credit card to fund their embedded wallets.
-3. **Advanced Charting:** Native integration of the full TradingView Lightweight Charts library for custom indicators.
-4. **Transaction History:** A clean, readable list of past swaps and transfers parsed from the Solana blockchain.
+## ⚙️ Setup & Installation
+
+### 1. Clone the repository and install dependencies
+
+```bash
+git clone https://github.com/Rajeev02/fomo-terminal.git
+cd fomo-terminal
+npm install
+```
+
+### 2. Configure Environment Variables
+
+Create a `.env.local` file in the root of the project:
+
+```env
+# Comma-separated BirdEye keys for automated rate-limit rotation
+BIRDEYE_API_KEY=your_key_1,your_key_2
+
+# Solana network configuration
+NEXT_PUBLIC_SOLANA_NETWORK=mainnet-beta
+
+# Privy App ID for wallet auth
+NEXT_PUBLIC_PRIVY_APP_ID=your_privy_app_id
+
+# Alchemy RPC endpoint to broadcast signed transactions
+NEXT_PUBLIC_ALCHEMY_RPC_URL=https://solana-mainnet.g.alchemy.com/v2/your_alchemy_key
+```
+
+### 3. Run the Development Server
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### 4. Compile Production Builds
+
+Ensure lints and compilation checks pass cleanly:
+
+```bash
+npm run lint
+npm run build
+```
+
+---
+
+## ⚡ Deployment on Vercel
+
+ChadWallet is optimized for zero-config Vercel deployments.
+
+1. Push your changes to your GitHub repository.
+2. Connect your repository on the [Vercel Dashboard](https://vercel.com/).
+3. Add the matching Environment Variables (from your `.env.local`) under the Project Settings.
+4. Trigger a Deploy. Vercel's global edge network handles caching and static page optimization.
