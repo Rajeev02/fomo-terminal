@@ -1,8 +1,6 @@
 "use client";
-import Image from "next/image";
-
 import { use, useEffect, useState } from "react";
-import { usePrivy } from "@privy-io/react-auth";
+import Image from "next/image";
 import { PortfolioBalances } from "@/components/wallet/PortfolioBalances";
 import { useAppStore } from "@/store/useAppStore";
 import { SniperPanel } from "@/components/swap/SniperPanel";

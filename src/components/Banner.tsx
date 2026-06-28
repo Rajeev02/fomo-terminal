@@ -34,46 +34,6 @@ function TokenIcon({ token }: { token: Token }) {
   );
 }
 
-// Mock data to start with
-const mockTokens: Token[] = [
-  {
-    address: "So11111111111111111111111111111111111111112",
-    symbol: "SOL",
-    price: 150.23,
-    change24h: 5.2,
-  },
-  {
-    address: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-    symbol: "USDC",
-    price: 1.0,
-    change24h: 0.01,
-  },
-  {
-    address: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
-    symbol: "BONK",
-    price: 0.000021,
-    change24h: 15.4,
-  },
-  {
-    address: "WENWENvqqNya429ubCdR81ZmD69brwQaaBYY6p3LCpk",
-    symbol: "WEN",
-    price: 0.00015,
-    change24h: -2.3,
-  },
-  {
-    address: "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
-    symbol: "JUP",
-    price: 1.25,
-    change24h: 8.7,
-  },
-  {
-    address: "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
-    symbol: "$WIF",
-    price: 2.3,
-    change24h: 22.1,
-  },
-];
-
 export function Banner({ reverse = false }: { reverse?: boolean }) {
   const [tokens, setTokens] = useState<Token[]>([]);
   const [isLoading, setIsLoading] = useState(true);

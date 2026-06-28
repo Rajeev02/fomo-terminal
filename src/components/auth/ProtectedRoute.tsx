@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isReady, isAuthenticated, login } = useAuth();
+  const { isReady, isAuthenticated } = useAuth();
   const router = useRouter();
 
   const isMockAppId = !process.env.NEXT_PUBLIC_PRIVY_APP_ID;
