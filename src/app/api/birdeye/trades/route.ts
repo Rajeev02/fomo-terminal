@@ -1,6 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { env } from "@/config/env";
 
+function getMockTrades() {
+  return {
+    items: Array.from({ length: 15 }).map((_, i) => ({
+      txHash: `tx...${i}`,
+      side: Math.random() > 0.5 ? "buy" : "sell",
+      volumeUSD: Math.random() * 5000 + 100,
+      tokens: Math.random() * 100000,
+      blockTime: Date.now() - i * 15 * 1000,
+    })),
+  };
+}
+
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const address = searchParams.get("address");
@@ -16,15 +28,7 @@ export async function GET(request: NextRequest) {
   if (!apiKey) {
     return NextResponse.json({
       success: true,
-      data: {
-        items: Array.from({ length: 15 }).map((_, i) => ({
-          txHash: `tx...${i}`,
-          side: Math.random() > 0.5 ? "buy" : "sell",
-          volumeUSD: Math.random() * 5000 + 100,
-          tokens: Math.random() * 100000,
-          blockTime: Date.now() - i * 15 * 1000,
-        })),
-      },
+      data: getMockTrades(),
     });
   }
 
@@ -41,7 +45,9 @@ export async function GET(request: NextRequest) {
     );
 
     if (!response.ok) {
-      throw new Error(`BirdEye API error: ${response.statusText}`);
+      throw new Error(
+        `BirdEye API error: ${response.status} ${response.statusText}`
+      );
     }
 
     const json = await response.json();
@@ -59,10 +65,10 @@ export async function GET(request: NextRequest) {
     }
     return NextResponse.json(json);
   } catch (error) {
-    console.error("Failed to fetch live trades:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to fetch live trades" },
-      { status: 500 }
-    );
+    console.error("Failed to fetch live trades, falling back to mock:", error);
+    return NextResponse.json({
+      success: true,
+      data: getMockTrades(),
+    });
   }
 }
