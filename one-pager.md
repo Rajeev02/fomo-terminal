@@ -1,10 +1,10 @@
-# ChadWallet / FomoTerminal One-Pager
+# ChadWallet One-Pager
 
 ## 1. Project Design & GitHub Repository
 
 ### The Design
 
-**ChadWallet** (also referred to as **FomoTerminal**) is a premium, high-performance web application tailored for the Solana ecosystem. Drawing strong design inspiration from top-tier crypto tracking platforms like [fomo.family](https://fomo.family), the interface delivers a slick, Web2-style "gasless-feeling" user experience that abstracts away the complexity of traditional Web3 products.
+**ChadWallet** is a premium, high-performance web application tailored for the Solana ecosystem. Drawing strong design inspiration from top-tier crypto tracking platforms like [fomo.family](https://fomo.family), the interface delivers a slick, Web2-style "gasless-feeling" user experience that abstracts away the complexity of traditional Web3 products.
 
 - **Landing Page & Onboarding:** Features a clean dark-mode design with modern glassmorphism (`backdrop-blur`), animated glowing rings, live-scrolling market banners displaying trending tokens, and direct links to App Store/Google Play downloads.
 - **Frictionless Authentication:** Implements **Privy** to allow users to sign in using social credentials (Google, Apple). Privy automatically provisions a secure, embedded, non-custodial Solana wallet in the background.
