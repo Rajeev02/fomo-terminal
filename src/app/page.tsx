@@ -2,7 +2,7 @@ import { Header } from "@/components/Header";
 import { FeatureCard } from "@/components/FeatureCard";
 import { Footer } from "@/components/Footer";
 import { Banner } from "@/components/Banner";
-import { ArrowRight } from "lucide-react";
+import { LaunchAppButton } from "@/components/LaunchAppButton";
 import Link from "next/link";
 import Image from "next/image";
 import { Logo } from "@/components/Logo";
@@ -26,55 +26,57 @@ export default function Home() {
         </div>
 
         {/* Hero Content */}
-        <div className="flex flex-col items-center gap-5 md:gap-8 mt-20 md:mt-32 z-10">
+        <div className="flex flex-col items-center gap-5 md:gap-8 mt-20 md:mt-32 z-10 w-full">
           <div className="flex flex-col gap-2 items-center text-center px-6">
-            <h1 className="text-[70px] leading-[70px] md:text-[130px] md:leading-[120px] text-foreground text-center tracking-tighter font-black max-w-5xl">
+            <h1 className="text-5xl md:text-[130px] leading-none text-foreground text-center tracking-tighter font-black max-w-5xl">
               chadwallet
             </h1>
-            <p className="text-[24px] md:text-[36px] text-foreground font-bold tracking-tight text-center mt-2">
+            <p className="text-[20px] md:text-[36px] text-foreground font-bold tracking-tight text-center mt-2">
               where traders become legends.
             </p>
-            <p className="md:text-[22px] text-muted-foreground text-center tracking-tight max-w-2xl mt-4">
+            <p className="text-sm md:text-[22px] text-muted-foreground text-center tracking-tight max-w-2xl mt-4 px-4">
               From memecoins to viral tokens, trade any crypto in seconds.
             </p>
           </div>
 
-          <div className="flex gap-2 md:hidden mt-6">
-            <Link
-              href="https://apps.apple.com/us/app/chadwallet/id6757367474"
-              target="_blank"
-              className="inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
-            >
-              <Image
-                src="/images/app-store.png"
-                alt="Download on the App Store"
-                width={192}
-                height={64}
-                className="h-[3rem] w-auto"
-              />
-            </Link>
-            <Link
-              href="https://play.google.com/store/apps/details?id=xyz.chadwallet.www"
-              target="_blank"
-              className="inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
-            >
-              <Image
-                src="/images/google-play.png"
-                alt="Get it on Google Play"
-                width={216}
-                height={64}
-                className="h-[3rem] w-auto"
-              />
-            </Link>
+          {/* Responsive Action Buttons (Mobile: stacked Launch + inline Badges; Desktop: inline row) */}
+          <div className="flex flex-col items-center gap-4 mt-6 md:hidden px-6 w-full max-w-xs">
+            <LaunchAppButton
+              className="w-full justify-center"
+              variant="primary"
+            />
+            <div className="flex gap-2 justify-center w-full">
+              <Link
+                href="https://apps.apple.com/us/app/chadwallet/id6757367474"
+                target="_blank"
+                className="flex-1 inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
+              >
+                <Image
+                  src="/images/app-store.png"
+                  alt="Download on the App Store"
+                  width={192}
+                  height={64}
+                  className="h-[2.5rem] w-auto object-contain"
+                />
+              </Link>
+              <Link
+                href="https://play.google.com/store/apps/details?id=xyz.chadwallet.www"
+                target="_blank"
+                className="flex-1 inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
+              >
+                <Image
+                  src="/images/google-play.png"
+                  alt="Get it on Google Play"
+                  width={216}
+                  height={64}
+                  className="h-[2.5rem] w-auto object-contain"
+                />
+              </Link>
+            </div>
           </div>
 
-          <div className="hidden md:flex gap-4 mt-8">
-            <button className="group relative items-center justify-center overflow-hidden bg-[#2563EB] hover:bg-[#1D4ED8] text-white backdrop-blur-md transition-colors duration-150 py-4 px-10 rounded-full text-lg font-bold border border-white/10 z-10 flex">
-              <span>Launch Web App</span>
-              <div className="flex items-center overflow-hidden w-0 opacity-0 group-hover:w-7 group-hover:opacity-100 transition-all duration-150 ease-out">
-                <ArrowRight className="size-5 ml-2 shrink-0" />
-              </div>
-            </button>
+          <div className="hidden md:flex gap-4 mt-8 items-center">
+            <LaunchAppButton variant="primary" />
             <Link
               href="https://apps.apple.com/us/app/chadwallet/id6757367474"
               target="_blank"
@@ -169,11 +171,11 @@ export default function Home() {
 
         {/* Features Grid Section */}
         <div className="pt-24 md:py-32 px-4 md:px-20 flex flex-col self-stretch md:self-center gap-12 w-full max-w-[1400px] z-10 relative">
-          <div className="hidden md:flex flex-col gap-1 text-left mb-4">
-            <h2 className="text-[40px] md:text-[56px] tracking-tighter leading-tight font-black text-foreground">
+          <div className="flex flex-col gap-1 text-center md:text-left mb-4">
+            <h2 className="text-3xl md:text-[56px] tracking-tighter leading-tight font-black text-foreground">
               never miss out again
             </h2>
-            <p className="text-muted-foreground leading-6 text-[22px] md:text-[24px]">
+            <p className="text-muted-foreground leading-6 text-base md:text-[24px]">
               the only social-first trading app
             </p>
           </div>
@@ -216,57 +218,58 @@ export default function Home() {
         </div>
 
         {/* Closing Social Proof Section */}
-        <div className="relative self-stretch flex items-center justify-center py-40 md:py-60 mt-20 overflow-hidden bg-gradient-to-b from-bg-primary via-[var(--chad-purple)]/5 to-bg-primary">
+        <div className="relative self-stretch flex items-center justify-center py-24 md:py-60 mt-20 overflow-hidden bg-gradient-to-b from-bg-primary via-[var(--chad-purple)]/5 to-bg-primary">
           <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-bg-primary to-transparent z-10" />
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-bg-primary to-transparent z-10" />
 
-          <div className="px-8 w-[90vw] max-w-4xl z-20">
+          <div className="px-6 w-[90vw] max-w-4xl z-20">
             <div className="flex flex-col justify-center items-center relative">
-              <div className="flex flex-col gap-6 items-center w-full relative z-30">
-                <h2 className="text-[40px] leading-[44px] md:text-[72px] md:leading-[76px] tracking-tighter text-center font-black">
+              <div className="flex flex-col gap-4 md:gap-6 items-center w-full relative z-30">
+                <h2 className="text-3xl leading-tight md:text-[72px] md:leading-[76px] tracking-tighter text-center font-black">
                   a crypto wallet
                   <br />
                   for the rest of us
                 </h2>
-                <p className="md:text-[24px] text-muted-foreground tracking-tight text-center mt-4">
+                <p className="text-sm md:text-[24px] text-muted-foreground tracking-tight text-center mt-2 md:mt-4">
                   join 100,000+ chads securing their bags
                 </p>
-                <div className="pt-10 w-full flex justify-center">
-                  <div className="flex gap-2 md:hidden">
-                    <Link
-                      href="https://apps.apple.com/us/app/chadwallet/id6757367474"
-                      target="_blank"
-                      className="inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
-                    >
-                      <Image
-                        src="/images/app-store.png"
-                        alt="Download on the App Store"
-                        width={192}
-                        height={64}
-                        className="h-[3rem] w-auto"
-                      />
-                    </Link>
-                    <Link
-                      href="https://play.google.com/store/apps/details?id=xyz.chadwallet.www"
-                      target="_blank"
-                      className="inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
-                    >
-                      <Image
-                        src="/images/google-play.png"
-                        alt="Get it on Google Play"
-                        width={216}
-                        height={64}
-                        className="h-[3rem] w-auto"
-                      />
-                    </Link>
+                <div className="pt-6 md:pt-10 w-full flex justify-center">
+                  <div className="flex flex-col items-center gap-4 md:hidden w-full max-w-xs">
+                    <LaunchAppButton
+                      className="w-full justify-center"
+                      variant="secondary"
+                    />
+                    <div className="flex gap-2 justify-center w-full">
+                      <Link
+                        href="https://apps.apple.com/us/app/chadwallet/id6757367474"
+                        target="_blank"
+                        className="flex-1 inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
+                      >
+                        <Image
+                          src="/images/app-store.png"
+                          alt="Download on the App Store"
+                          width={192}
+                          height={64}
+                          className="h-[2.5rem] w-auto object-contain"
+                        />
+                      </Link>
+                      <Link
+                        href="https://play.google.com/store/apps/details?id=xyz.chadwallet.www"
+                        target="_blank"
+                        className="flex-1 inline-flex items-center justify-center overflow-hidden rounded-md transition-transform duration-200 hover:-translate-y-0.5 z-10"
+                      >
+                        <Image
+                          src="/images/google-play.png"
+                          alt="Get it on Google Play"
+                          width={216}
+                          height={64}
+                          className="h-[2.5rem] w-auto object-contain"
+                        />
+                      </Link>
+                    </div>
                   </div>
-                  <div className="hidden md:flex gap-4">
-                    <button className="group relative items-center justify-center overflow-hidden bg-[var(--chad-green)] hover:bg-[var(--chad-green)]/90 text-black transition-colors duration-150 py-4 px-8 rounded-xl text-lg font-bold z-10 flex">
-                      <span>Launch Web App</span>
-                      <div className="flex items-center overflow-hidden w-0 opacity-0 group-hover:w-7 group-hover:opacity-100 transition-all duration-150 ease-out">
-                        <ArrowRight className="size-5 ml-2 shrink-0" />
-                      </div>
-                    </button>
+                  <div className="hidden md:flex gap-4 items-center">
+                    <LaunchAppButton variant="secondary" />
                     <Link
                       href="https://apps.apple.com/us/app/chadwallet/id6757367474"
                       target="_blank"
@@ -298,7 +301,7 @@ export default function Home() {
               </div>
 
               {/* Spinning background rings */}
-              <div className="absolute inset-0 m-auto z-1 w-[600px] h-[600px] md:w-[30vw] md:h-[30vw] max-w-none max-h-none shrink-0 aspect-square rounded-full border border-dashed border-foreground/20 animate-[spin_30s_linear_infinite_reverse]">
+              <div className="absolute inset-0 m-auto z-1 w-[320px] h-[320px] md:w-[30vw] md:h-[30vw] md:max-w-[600px] md:max-h-[600px] max-w-none max-h-none shrink-0 aspect-square rounded-full border border-dashed border-foreground/20 animate-[spin_30s_linear_infinite_reverse]">
                 {/* Inner Ring Avatars */}
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-0">
                   <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden flex items-center justify-center animate-[spin_30s_linear_infinite]">
@@ -322,7 +325,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-0 m-auto z-1 w-[800px] h-[800px] md:w-[45vw] md:h-[45vw] max-w-none max-h-none shrink-0 aspect-square rounded-full border border-dashed border-foreground/10 animate-[spin_45s_linear_infinite]">
+              <div className="absolute inset-0 m-auto z-1 w-[460px] h-[460px] md:w-[45vw] md:h-[45vw] md:max-w-[800px] md:max-h-[800px] max-w-none max-h-none shrink-0 aspect-square rounded-full border border-dashed border-foreground/10 animate-[spin_45s_linear_infinite]">
                 {/* Outer Ring Avatars */}
                 <div className="absolute top-1/2 left-1/2 w-full h-0 flex justify-end -translate-x-1/2 rotate-[45deg]">
                   <div className="w-12 h-12 md:w-16 md:h-16 shrink-0 -translate-y-1/2 translate-x-1/2 bg-bg-secondary rounded-full border border-white/10 shadow-sm overflow-hidden animate-[spin_45s_linear_infinite_reverse]">

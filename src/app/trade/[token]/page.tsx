@@ -12,7 +12,15 @@ import {
 import { Token } from "@/components/Banner";
 import { TradingViewChart } from "@/components/TradingViewChart";
 import Link from "next/link";
-import { Copy, TrendingUp, TrendingDown, Users, Activity } from "lucide-react";
+import {
+  Copy,
+  TrendingUp,
+  TrendingDown,
+  Users,
+  Activity,
+  Zap,
+  Wallet,
+} from "lucide-react";
 import { SwapPanel } from "@/components/swap/SwapPanel";
 
 function TradeContent({ tokenAddress }: { tokenAddress: string }) {
@@ -27,6 +35,19 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
     "trending"
   );
   const { activeTab: layoutTab } = useAppStore();
+  const [mobileTab, setMobileTab] = useState<
+    "explore" | "chart" | "trade" | "portfolio"
+  >("chart");
+
+  // Synchronize mobile view tab when store's layoutTab is changed
+  useEffect(() => {
+    if (layoutTab === "portfolio") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setMobileTab("portfolio");
+    } else if (layoutTab === "swap" || layoutTab === "sniper") {
+      setMobileTab("trade");
+    }
+  }, [layoutTab]);
 
   const { data: overview, isLoading: isOverviewLoading } =
     useTokenOverview(tokenAddress);
@@ -59,7 +80,9 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
   return (
     <div className="flex-1 flex flex-col lg:flex-row h-full overflow-hidden bg-background">
       {/* Left Column: Trending List */}
-      <aside className="w-full lg:w-80 border-r border-foreground/10 flex flex-col bg-bg-primary">
+      <aside
+        className={`w-full lg:w-80 border-r border-foreground/10 flex-col bg-bg-primary shrink-0 ${mobileTab === "explore" ? "flex" : "hidden lg:flex"}`}
+      >
         <div className="px-4 pt-4 pb-2 border-b border-foreground/10 flex flex-col gap-3">
           <div className="flex items-center gap-4 text-xs font-bold text-muted-foreground tracking-wide">
             <span
@@ -166,7 +189,9 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
       </aside>
 
       {/* Middle Column: Chart & Info */}
-      <main className="flex-1 flex flex-col border-r border-foreground/10 min-w-0 bg-bg-primary overflow-y-auto custom-scrollbar">
+      <main
+        className={`flex-1 flex flex-col border-r border-foreground/10 min-w-0 bg-bg-primary overflow-y-auto custom-scrollbar ${mobileTab === "chart" ? "flex" : "hidden lg:flex"}`}
+      >
         {/* Token Info Header */}
         <div className="p-4 border-b border-foreground/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -434,8 +459,10 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
       </main>
 
       {/* Right Column: Action & Position */}
-      <aside className="w-full lg:w-96 flex flex-col bg-bg-secondary overflow-y-auto custom-scrollbar border-l border-foreground/10">
-        <div className="flex-1 p-4">
+      <aside
+        className={`w-full lg:w-96 flex-col bg-bg-secondary overflow-y-auto custom-scrollbar border-l border-foreground/10 shrink-0 ${mobileTab === "trade" || mobileTab === "portfolio" ? "flex" : "hidden lg:flex"}`}
+      >
+        <div className="flex-1 p-4 pb-20 lg:pb-4">
           {layoutTab === "swap" && (
             <SwapPanel
               tokenAddress={tokenAddress}
@@ -448,6 +475,60 @@ function TradeContent({ tokenAddress }: { tokenAddress: string }) {
           {layoutTab === "portfolio" && <PortfolioBalances />}
         </div>
       </aside>
+
+      {/* Mobile Bottom Tab Navigation */}
+      <div className="lg:hidden sticky bottom-0 left-0 right-0 z-40 bg-bg-secondary/95 backdrop-blur-md border-t border-foreground/10 flex justify-around items-center py-2 px-4 shrink-0">
+        <button
+          onClick={() => setMobileTab("explore")}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-lg text-[10px] font-black transition-all ${
+            mobileTab === "explore"
+              ? "text-[var(--chad-green)]"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          <Activity size={18} />
+          <span>EXPLORE</span>
+        </button>
+        <button
+          onClick={() => setMobileTab("chart")}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-lg text-[10px] font-black transition-all ${
+            mobileTab === "chart"
+              ? "text-[var(--chad-green)]"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          <TrendingUp size={18} />
+          <span>CHART</span>
+        </button>
+        <button
+          onClick={() => {
+            setMobileTab("trade");
+            useAppStore.getState().setActiveTab("swap");
+          }}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-lg text-[10px] font-black transition-all ${
+            mobileTab === "trade"
+              ? "text-[var(--chad-green)]"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          <Zap size={18} />
+          <span>TRADE</span>
+        </button>
+        <button
+          onClick={() => {
+            setMobileTab("portfolio");
+            useAppStore.getState().setActiveTab("portfolio");
+          }}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-lg text-[10px] font-black transition-all ${
+            mobileTab === "portfolio"
+              ? "text-[var(--chad-green)]"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          <Wallet size={18} />
+          <span>PORTFOLIO</span>
+        </button>
+      </div>
     </div>
   );
 }
