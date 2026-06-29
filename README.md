@@ -5,71 +5,34 @@
 [![React Version](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![Next.js Version](https://img.shields.io/badge/Next.js-16--Turbopack-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 
-**ChadWallet** is a premium, high-performance web-based trading terminal designed for the Solana blockchain. Drawing aesthetic inspiration from slick, social-first crypto platforms like [fomo.family](https://fomo.family), ChadWallet abstracts away the typical friction points of Web3 onboarding—delivering a "gasless-feeling" Web2 user experience.
+## Overview
+**ChadWallet (FomoTerminal)** is a premium, high-performance web-based trading terminal designed specifically for the Solana blockchain. By integrating slick aesthetics with social-first crypto onboarding principles, ChadWallet completely removes the traditional friction points associated with Web3. Using embedded wallets and social log-ins, it offers a "gasless-feeling" Web2-like user experience combined with the power of DeFi.
 
----
+## Features
+- **Frictionless Social Authentication:** Seamless one-click login using Google or Apple via Privy.
+- **Embedded Invisible Wallets:** Instantly provisions non-custodial Solana wallets upon authentication. No seed phrases or browser extensions required.
+- **High-Performance Trading Terminal:** Responsive three-column layout featuring token discovery, dynamic canvas charts, and Jupiter DEX integration.
+- **Native Canvas-Based Charting:** Implements `@tradingview/lightweight-charts` for smooth, interactive, and customizable charting experiences without iframe lag.
+- **Optimal Price Swaps:** Leverages the Jupiter API to source the best swap routes and lowest slippage across Solana DEX pools.
+- **Automated API Resiliency:** Includes intelligent key rotation and automatic mock-data fallbacks to guarantee 100% uptime when external data providers (like Birdeye) hit rate limits.
 
-## 📸 Previews & Interface
+## Architecture
+The application is built on a modern Next.js 16 (App Router) foundation:
+- **Client/Frontend:** Uses React 19, Tailwind CSS v4, and Zustand to render highly responsive UI components and manage client-side state.
+- **Data Layer:** React Query (TanStack) orchestrates real-time polling and cache invalidation.
+- **Server API Proxies:** Next.js Serverless API routes act as intermediaries to fetch data, handle API key rotation securely, and hide sensitive tokens from the client.
+- **Blockchain Interface:** Privy handles wallet provisioning, while Alchemy RPCs and `@solana/web3.js` are used for broadcasting signed transactions.
 
-### 🏠 Landing Home Page
+## Technology Stack
+- **Framework:** Next.js 16 (App Router), React 19, Turbopack
+- **Styling:** Tailwind CSS v4, clsx, tailwind-merge
+- **State Management:** Zustand, React Query (TanStack)
+- **Web3 / Auth:** Privy React SDK, @solana/web3.js
+- **DeFi:** Jupiter API (DEX Aggregator)
+- **Data Visualization:** Lightweight Charts (@tradingview/lightweight-charts)
+- **Tooling:** TypeScript, ESLint, Prettier, Husky
 
-![ChadWallet Home Landing Page](public/images/hero-desktop.png)
-
-### 📊 Trading Dashboard
-
-![ChadWallet Trading Dashboard](public/images/hero-section.png)
-
----
-
-## 🚀 Key Features & Capabilities (What We Achieved)
-
-### 1. Frictionless Social Authentication & Embedded Wallets
-
-- **One-Click Social Logins:** Seamlessly authenticate using **Google** or **Apple** credentials powered by **Privy**.
-- **Invisible Non-Custodial Wallets:** Privy instantly provisions an embedded, secure Solana wallet in the background upon login. Users do not need seed phrases, browser extensions, or pre-existing Web3 knowledge.
-
-### 2. High-Performance Trading Terminal UI (`/trade/[token]`)
-
-- **Three-Column Responsive Layout:**
-  - _Left Column (Discovery):_ Real-time trending tokens list fetched live from the Solana ecosystem.
-  - _Middle Column (Analysis):_ Token price information, native interactive charts, live trade history feeds, and top holders tables.
-  - _Right Column (Actions):_ Jupiter DEX aggregator swap panels and real-time portfolio balance listings.
-- **100% Mobile Responsive Optimization:** Integrates a sticky mobile bottom tab navigation bar (`Explore`, `Chart`, `Trade`, `Portfolio`) that toggles visibility of the active panel, transforming the stacked vertical viewport into a clean, single-focused app experience on small viewports.
-
-### 3. Native Canvas-Based Charting (Lightweight Charts)
-
-- **No Iframes:** Replaced lagging TradingView/BirdEye widget iframes with a native, interactive canvas chart using `@tradingview/lightweight-charts`.
-- **Dynamic Timeframe Selectors:** Users can toggle resolutions ("15m", "1H", "4H", "1D") directly on the chart, triggering dynamic history windows and ticks.
-- **Volume Panels:** Secondary volume histograms are rendered directly onto the bottom 20% of the chart canvas.
-- **Instant Theme Synchronization:** Redesigned color-wick drawing to use a static TypeScript theme mapping (`getThemeColors`), resolving hydration race conditions and displaying instant theme updates (Dark/Light/Chad).
-
-### 4. Optimal Price Swaps (Jupiter Aggregator)
-
-- **Jupiter API Integration:** Queries optimal swap routes and slippage bounds across all Solana DEX pools.
-- **Alchemy RPC Node:** signs compiled swap transactions via Privy's embedded wallet and broadcasts the payload directly to the Solana network.
-
-### 5. Automated API Key Rotation & Resiliency
-
-- **Multi-Key Cycling:** Supports a comma-separated list of keys under `BIRDEYE_API_KEY`. If a key hits rate limits (HTTP 429 Too Many Requests) or fails, the central fetch utility (`fetchBirdEye`) automatically logs the issue and cycles to the next key.
-- **Resilient Fallback Engines:** If all keys fail, all endpoints automatically serve realistic, structured mock datasets, guaranteeing **100% uptime** and preventing Vercel HTTP 500 error pages.
-
----
-
-## 🛠️ Technology Stack & Libraries
-
-- **Core Framework:** [Next.js 16 (App Router)](https://nextjs.org/) utilizing React 19 and Turbopack.
-- **Styling & Design System:** [Tailwind CSS v4](https://tailwindcss.com/) with dark-mode glassmorphism accents.
-- **State Management:** [Zustand](https://github.com/pmndrs/zustand) for global persistent UI settings.
-- **Data Fetching & Cache:** [React Query (TanStack)](https://tanstack.com/query/latest) for frontend polling intervals and deduplication.
-- **Auth & Wallets:** [Privy React SDK](https://privy.io/) for social sign-in and embedded Solana wallet provisionings.
-- **DEX Swap Aggregator:** [Jupiter API](https://developers.jup.ag/) for transaction serialization and route quotes.
-- **Solana Connection:** `@solana/web3.js` and Alchemy RPC nodes.
-- **Canvas Charts:** `@tradingview/lightweight-charts` (v5.2) for charting.
-
----
-
-## 📂 Project Directory Structure
-
+## Project Structure
 ```text
 fomo-terminal/
 ├── docs/                      # Technical flow and end-to-end user guides
@@ -79,14 +42,10 @@ fomo-terminal/
 │   │   ├── api/               # Server-side API proxy routes (resilient endpoints)
 │   │   ├── trade/             # Trading Dashboard route
 │   │   └── page.tsx           # Home Landing Page
-│   ├── components/            # Reusable UI widgets
-│   │   ├── auth/              # Privy AuthButton and ProtectedRoute wrapper
-│   │   ├── swap/              # SwapPanel and Sniper settings card
-│   │   ├── ui/                # Shared buttons, tables, and tabs
-│   │   ├── Banner.tsx         # Top/Bottom rotating token marquee banners
-│   │   └── TradingViewChart.tsx # Lightweight Canvas Chart component
+│   ├── components/            # Reusable UI widgets (Auth, Swap, Chart, etc.)
 │   ├── config/                # Environment schema validation
 │   ├── hooks/                 # Centralized fetching hooks (useSolana, useBirdeye)
+│   ├── lib/                   # Utility libraries and core functions
 │   ├── store/                 # Zustand theme and panel preferences
 │   └── utils/                 # Resilient helper utilities (fetchBirdEye key rotation)
 ├── .env.local                 # Local environment keys (ignored by Git)
@@ -94,22 +53,21 @@ fomo-terminal/
 └── tsconfig.json              # TypeScript compilation rules
 ```
 
----
+## Prerequisites
+- **Node.js** v20.x or higher
+- **npm** v10.x or higher
+- API Keys for **Privy**, **Birdeye**, and **Alchemy**.
 
-## ⚙️ Setup & Installation
-
-### 1. Clone the repository and install dependencies
-
+## Installation
+Clone the repository and install dependencies:
 ```bash
 git clone https://github.com/Rajeev02/fomo-terminal.git
 cd fomo-terminal
 npm install
 ```
 
-### 2. Configure Environment Variables
-
-Create a `.env.local` file in the root of the project:
-
+## Configuration
+Create a `.env.local` file in the root directory and populate it with the required keys:
 ```env
 # Comma-separated BirdEye keys for automated rate-limit rotation
 BIRDEYE_API_KEY=your_key_1,your_key_2
@@ -124,30 +82,56 @@ NEXT_PUBLIC_PRIVY_APP_ID=your_privy_app_id
 NEXT_PUBLIC_ALCHEMY_RPC_URL=https://solana-mainnet.g.alchemy.com/v2/your_alchemy_key
 ```
 
-### 3. Run the Development Server
-
+## Quick Start
+Start the development server:
 ```bash
 npm run dev
 ```
-
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 4. Compile Production Builds
+## Usage
+- **Explore:** Use the left navigation panel on the trading dashboard to discover trending Solana tokens.
+- **Chart Analysis:** Interact with the native canvas charts. Switch between timeframes (15m, 1H, 1D) directly from the UI.
+- **Trade:** Authenticate via a social login to instantly provision an embedded wallet. Use the Jupiter-powered swap panel on the right to execute optimal trades.
+- **Portfolio:** View your active token balances in real-time within the portfolio section.
 
-Ensure lints and compilation checks pass cleanly:
+## API Reference/CLI
+This project communicates with the following core APIs:
+- **Jupiter API (v6):** `/quote` and `/swap` endpoints for routing and transaction building.
+- **Birdeye API:** Endpoints like `/defi/history_price` and `/defi/tokenlist` proxied through Next.js API routes under `src/app/api/` with multi-key rotation and caching.
+- **Privy API:** Handled automatically via the `@privy-io/react-auth` SDK for wallet authentication.
 
+## Testing
+Ensure code quality by running linting and formatting tools:
 ```bash
 npm run lint
-npm run build
 ```
+Pre-commit hooks are configured using Husky to automatically run linting via `lint-staged`.
 
----
+## Deployment/Publishing
+ChadWallet is optimized for deployment on Vercel:
+1. Push your repository to GitHub.
+2. Import the project in your Vercel Dashboard.
+3. Configure the Environment Variables present in your `.env.local`.
+4. Deploy. Vercel automatically detects Next.js and configures the build settings (`npm run build`).
 
-## ⚡ Deployment on Vercel
+## Security
+- **Non-Custodial Embedded Wallets:** Private keys are isolated and never touch the application's servers, relying purely on Privy’s secure infrastructure.
+- **API Key Masking:** External data provider API keys (e.g., Birdeye) are strictly kept server-side and never exposed to the client.
+- **Input Validation:** Zod is used (where applicable) to validate configuration and API payloads.
 
-ChadWallet is optimized for zero-config Vercel deployments.
+## Performance
+- **Zero Iframe Footprint:** Migrated from bloated TradingView widgets to lightweight native canvas charts.
+- **Optimized Builds:** Powered by Next.js Turbopack for rapid compilation and efficient server-side rendering.
+- **Edge Caching:** Ready for Vercel's Edge Network to serve static assets and cache API responses effectively.
 
-1. Push your changes to your GitHub repository.
-2. Connect your repository on the [Vercel Dashboard](https://vercel.com/).
-3. Add the matching Environment Variables (from your `.env.local`) under the Project Settings.
-4. Trigger a Deploy. Vercel's global edge network handles caching and static page optimization.
+## Contributing
+We welcome contributions to ChadWallet! Please adhere to standard fork/pull-request workflows:
+1. Fork the repository.
+2. Create your feature branch (`git checkout -b feature/amazing-feature`).
+3. Commit your changes (`git commit -m 'Add amazing feature'`).
+4. Push to the branch (`git push origin feature/amazing-feature`).
+5. Open a Pull Request.
+
+## License
+This project is licensed under the MIT License.
