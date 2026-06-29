@@ -9,6 +9,18 @@
 
 ---
 
+## 📸 Previews & Interface
+
+### 🏠 Landing Home Page
+
+![ChadWallet Home Landing Page](public/images/hero-desktop.png)
+
+### 📊 Trading Dashboard
+
+![ChadWallet Trading Dashboard](public/images/hero-section.png)
+
+---
+
 ## 🚀 Key Features & Capabilities (What We Achieved)
 
 ### 1. Frictionless Social Authentication & Embedded Wallets
